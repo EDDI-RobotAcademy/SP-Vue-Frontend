@@ -1,4 +1,3 @@
-
 import TravelListPage from "@/travel/pages/list/TravelListPage.vue"
 
 const TravelRoutes = [
