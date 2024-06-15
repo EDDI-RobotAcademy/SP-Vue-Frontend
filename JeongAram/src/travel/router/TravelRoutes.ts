@@ -1,5 +1,5 @@
-
 import TravelListPage from "@/travel/pages/list/TravelListPage.vue"
+
 
 const TravelRoutes = [
     {
@@ -7,6 +7,7 @@ const TravelRoutes = [
         name: 'TravelListPage',
         component: TravelListPage,
     },
+   
 ]
 
 export default TravelRoutes
