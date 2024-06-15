@@ -9,6 +9,7 @@ export interface Travel {
     travelProperty: string
     travelContent: string
     travelPrice: string
+    travelImage: string
 }
 
 const state: TravelState = {
