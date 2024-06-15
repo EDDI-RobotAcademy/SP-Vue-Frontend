@@ -23,8 +23,52 @@
 </template>
 
 <script>
+// 이것은 vuex 때문에 사용 가능
+import { mapActions, mapState } from 'vuex'
+
+const travelModule = 'travelModule'
+
+export default {
+    components: {
+        // RouterLink
+    },
+    computed: {
+        ...mapState(travelModule, ['travelList']),
+        pagedItems () {
+            const startIdx = (this.pagination.page - 1) * this.perPage
+            const endIdx = startIdx + this.perPage
+            return this.travelList.slice(startIdx, endIdx)
+        }
+    },
+    mounted () {
+        this.requestTravelListToDjango()
+    },
+    methods: {
+        ...mapActions(travelModule, ['requestTravelListToDjango']),
+        getImageUrl (imageName) {
+            return require('@/assets/images/uploadImages/' + imageName)
+        },
+        goToTravelReadPage (event, { item }) {
+            console.log('읽기 구현 할 때 사용!')
+        }
+    },
+    data () {
+        return {
+            headerTitle: [
+                {
+                    title: 'No',
+                    align: 'start',
+                    sortable: true,
+                    key: 'travelName',
+                },
+                { title: '상품명', align: 'end', key: 'travelName' },
+                { title: '상품 가격', align: 'end', key: 'travelPrice' },
+            ],
+            perPage: 5,
+            pagination: {
+                page: 1,
+            }
+        }
+    }
+}
 </script>
-
-// npm install axios --legacy-peer-deps
-
-<script>
