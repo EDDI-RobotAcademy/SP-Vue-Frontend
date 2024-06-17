@@ -9,6 +9,7 @@ export interface Travel {
     travelPrice: string
     travelProperty: string
     travelContent: string
+    travelImage: string
   
    
 }

@@ -1,4 +1,5 @@
 import TravelListPage from "@/travel/pages/list/TravelListPage.vue"
+import TravelRegisterPage from "@/travel/pages/register/TravelRegisterPage.vue"
 
 
 const TravelRoutes = [
@@ -7,6 +8,11 @@ const TravelRoutes = [
         name: 'TravelListPage',
         component: TravelListPage,
     },
+    {
+        path: '/travel/register',
+        name: 'TravelRegisterPage',
+        component: TravelRegisterPage,
+    }
    
 ]
 
