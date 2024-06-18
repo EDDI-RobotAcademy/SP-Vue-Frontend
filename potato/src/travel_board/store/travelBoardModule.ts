@@ -2,18 +2,18 @@ import actions, { TravelBoardActions } from "./actions"
 import mutations, { TravelBoardMutations } from "./mutations"
 import state, { TravelBoardState } from "./states"
 
-export interface TravelModule {
+export interface TravelBoardModule {
     namespaced: true
     state: TravelBoardState
     actions: TravelBoardActions
     mutations: TravelBoardMutations
 }
 
-const travelModule: TravelModule = {
+const travelBoardModule: TravelBoardModule = {
     namespaced: true,
     state,
     actions,
     mutations,
 }
 
-export default travelModule
+export default travelBoardModule

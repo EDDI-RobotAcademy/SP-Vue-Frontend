@@ -1,24 +1,24 @@
 <template lang="">
     <v-container>
-        <h2>리뷰 게시판</h2>
-        <v-alert travelBoardList></v-alert>
-        <v-row v-if="travelBoardList">
-            <v-col v-for="(travelBoard, index) in travelBoardList" :key=index cols="12" sm="6" md="4" lg="3">
-                        <template v-slot:placeholder>
-                            <v-row class="fill-height ma-0" align="center" justify="center">
-                                <v-progress-circular indeterminate color="grey lighten-5"/>
-                            </v-row>
-                        </template>
-                    <v-card-title>{{ travelBoard.title }}</v-card-title>
-                    <v-card-subtitle>{{ travelBoard.point }}</v-card-subtitle>
-            </v-col>
-        </v-row>
-        <v-row v-else>
-            <!-- Bootstrap 등에서 기본적으로 화면을 12개의 열로 구성함(전체 쓰겠단 소리) -->
-            <v-col cols="12" class="text-center">
-                <v-alert type="info">등록된 리뷰가 없습니다!</v-alert>
-            </v-col>
-        </v-row>
+        <h2>Travel Board 리뷰 게시판</h2>
+        <div style="text-align: left; margin: 15px;">
+            <router-link :to="{ name: 'TravelBoardListPage' }">
+                게시물 작성
+            </router-link>
+        </div>
+        <v-data-table
+            v-model:items-per-page="perPage"
+            :headers="headerTitle"
+            :items="pagedItems"
+            v-model:pagination="pagination"
+            class="elevation-1"
+            @click:row="readRow"
+            item-value="boardId"/>
+        <v-pagination
+            v-model="pagination.page"
+            :length="Math.ceil(travelBoardList.length / perPage)"
+            color="primary"
+            @input="updateItems"/>
     </v-container>
 </template>
 
@@ -37,7 +37,7 @@ export default {
         pagedItems () {
             const startIdx = (this.pagination.page - 1) * this.perPage
             const endIdx = startIdx + this.perPage
-            return this.travelList.slice(startIdx, endIdx)
+            return this.travelBoardList.slice(startIdx, endIdx)
         }
     },
     mounted () {
@@ -45,12 +45,7 @@ export default {
     },
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardListToDjango']),
-        getImageUrl (imageName) {
-            return require('@/assets/images/uploadImages/' + imageName)
-        },
-        goToTravelReadPage (event, { item }) {
-            console.log('읽기 구현 할 때 사용!')
-        }
+        
     },
     data () {
         return {
@@ -59,10 +54,11 @@ export default {
                     title: 'No',
                     align: 'start',
                     sortable: true,
-                    key: 'travelBoardId',
+                    key: 'boardId',
                 },
                 { title: '제목', align: 'end', key: 'title' },
-                { title: '평점', align: 'end', key: 'point' },
+                { title: '작성자', align: 'end', key: 'writer' },
+                { title: '작성일자', align: 'end', key: 'regDate' },
             ],
             perPage: 5,
             pagination: {
