@@ -27,7 +27,6 @@ const actions: TravelBoardActions = {
         imageFormData: FormData): Promise<AxiosResponse> {
         try {
                 console.log('requestCreateTravelBoardToDjango()')
-                console.log(imageFormData)
                 const res: AxiosResponse = await axiosInst.djangoAxiosInst.post(
                     '/travel_board/register', imageFormData, {
                     headers: {
