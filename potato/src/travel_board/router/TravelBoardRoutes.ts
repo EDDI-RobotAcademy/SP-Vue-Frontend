@@ -1,5 +1,6 @@
 import TravelBoardRegisterPage from "@/travel_board/pages/register/TravelBoardRegisterPage.vue"
 import TravelBoardListPage from "@/travel_board/pages/list/TravelBoardListPage.vue"
+import TravelBoardReadPage from "@/travel_board/pages/read/TravelBoardReadPage.vue"
 
 const TravelRoutes = [
     {
@@ -11,6 +12,16 @@ const TravelRoutes = [
         path: '/travel_board/register',
         name: 'TravelBoardRegisterPage',
         component: TravelBoardRegisterPage,
+    },
+    {
+        path: '/travel_board/read/:BoardId',
+        name: 'TravelBoardReadPage',
+        components: {
+            default: TravelBoardReadPage,
+        },
+        props: {
+            default: true
+        }
     },
 ]
 
