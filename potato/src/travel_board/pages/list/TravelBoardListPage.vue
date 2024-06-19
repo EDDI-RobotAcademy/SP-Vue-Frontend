@@ -2,7 +2,7 @@
     <v-container>
         <h2>Travel Board 리뷰 게시판</h2>
         <div style="text-align: left; margin: 15px;">
-            <router-link :to="{ name: 'TravelBoardListPage' }">
+            <router-link :to="{ name: 'TravelBoardRegisterPage' }">
                 게시물 작성
             </router-link>
         </div>
