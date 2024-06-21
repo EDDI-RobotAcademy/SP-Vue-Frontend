@@ -22,6 +22,11 @@
                     </v-row>
                     <v-row justify="end">
                         <v-col cols="auto">
+                            <router-link :to="{ name: 'TravelBoardModifyPage', params: { boardId } }">
+                                <v-btn color="primary">수정</v-btn>
+                            </router-link>
+                        </v-col>
+                        <v-col cols="auto">
                             <router-link :to="{ name: 'TravelBoardListPage' }">
                                 <v-btn color="secondary">돌아가기</v-btn>
                             </router-link>
