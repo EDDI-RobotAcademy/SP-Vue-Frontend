@@ -1,6 +1,7 @@
 import TravelBoardRegisterPage from "@/travel_board/pages/register/TravelBoardRegisterPage.vue"
 import TravelBoardListPage from "@/travel_board/pages/list/TravelBoardListPage.vue"
 import TravelBoardReadPage from "@/travel_board/pages/read/TravelBoardReadPage.vue"
+import TravelBoardModifyPage from "@/travel_board/pages/modify/TravelBoardModifyPage.vue"
 
 const TravelRoutes = [
     {
@@ -18,6 +19,16 @@ const TravelRoutes = [
         name: 'TravelBoardReadPage',
         components: {
             default: TravelBoardReadPage,
+        },
+        props: {
+            default: true
+        }
+    },
+    {
+        path: '/travel_board/modify:BoardId',
+        name: 'TravelBoardModifyPage',
+        components: {
+            default: TravelBoardModifyPage,
         },
         props: {
             default: true
