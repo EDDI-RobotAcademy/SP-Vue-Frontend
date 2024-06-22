@@ -9,6 +9,8 @@ export type TravelBoardActions = {
     requestTravelBoardListToDjango(context: ActionContext<TravelBoardState, any>): Promise<void>
     requestCreateTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         imageFormData: FormData): Promise<AxiosResponse>,
+    requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
+        boardId: number): Promise<void>
 }
 
 const actions: TravelBoardActions = {
@@ -54,5 +56,15 @@ const actions: TravelBoardActions = {
                     throw error
                 }
         },
+        async requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
+            boardId: number): Promise<void> {
+                try {
+                    console.log('requestDeleteTravelToDjango()')
+                    await axiosInst.djangoAxiosInst.delete(`/travel_board/delete/${boardId}`)
+                } catch (error) {
+                    console.log('requestDeleteTravelBoardToDjango() 과정에서 문제 발생')
+                    throw error
+                }
+            }
 };
 export default actions;
