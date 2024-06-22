@@ -59,7 +59,7 @@ export default {
                     title: 'No',
                     align: 'start',
                     sortable: true,
-                    key: 'travelName',
+                    key: 'travelId',
                 },
                 { title: '상품명', align: 'end', key: 'travelName' },
                 { title: '상품 가격', align: 'end', key: 'travelPrice' },
