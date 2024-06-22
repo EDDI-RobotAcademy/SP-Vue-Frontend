@@ -33,6 +33,9 @@
                     </v-row>
                     <v-row justify="end">
                         <v-col cols="auto">
+                            <v-btn color="error" @click="onDelete">삭제</v-btn>
+                        </v-col>
+                        <v-col cols="auto">
                             <router-link :to="{ name: 'TravelBoardListPage' }">
                                 <v-btn color="secondary">돌아가기</v-btn>
                             </router-link>
@@ -61,11 +64,16 @@ export default {
     },
     // 삭제는 다른 분이 구현
     methods: {
-        ...mapActions(travelBoardModule, ['requestTravelBoardToDjango']),
+        ...mapActions(travelBoardModule, ['requestTravelBoardToDjango', 'requestDeleteTravelBoardToDjango']),
         getReviewImageUrl (reviewImage) {
             console.log('reviewImage:', reviewImage)
             return require('@/assets/images/uploadImages/' + reviewImage)
         },
+        async onDelete() {
+            console.log('삭제를 누르셨습니다!')
+            await this.requestDeleteTravelBoardToDjango(this.BoardId)
+            await this.$router.push({ name: 'TravelBoardListPage' })
+        }
     },
     created () {
         console.log('BoardId', this.BoardId)
