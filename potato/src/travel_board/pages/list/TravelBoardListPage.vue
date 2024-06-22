@@ -6,6 +6,7 @@
                 게시물 작성
             </router-link>
         </div>
+        <!-- 여기서 게시물 클릭 기능 구현 >> readrow -->
         <v-data-table
             v-model:items-per-page="perPage"
             :headers="headerTitle"
@@ -23,7 +24,6 @@
 </template>
 
 <script>
-// 이것은 vuex 때문에 사용 가능
 import { mapActions, mapState } from 'vuex'
 
 const travelBoardModule = 'travelBoardModule'
@@ -45,7 +45,24 @@ export default {
     },
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardListToDjango']),
-        
+        readRow (event, { item }) {
+            console.log('item :', item)
+            this.$router.push({
+                name: 'TravelBoardReadPage',
+                // BoardId는 Vue에서 사용할 변수(States), boardId는 Django에서 반환한 data field명!
+                params: { BoardId: item['boardId'].toString() }
+            })
+        },
+        getImageUrl (reviewImage) {
+            console.log('reviewImage :', reviewImage)
+            return require('@/assets/images/uploadImages/' + reviewImage)
+        },
+        goToProductReadPage (BoardId) {
+            this.$router.push({
+                name: 'TravelBoardReadPage',
+                params: { BoardId: BoardId }
+            })
+        }
     },
     data () {
         return {

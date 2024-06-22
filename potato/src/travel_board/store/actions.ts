@@ -5,7 +5,7 @@ import axiosInst from "@/utility/axiosInstance"
 // import { REQUEST_TRAVEL_BOARD_LIST_TO_DJANGO } from "./mutation-types"
 
 export type TravelBoardActions = {
-    requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, BoardId: number): Promise<void>,
+    requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, boardId: number): Promise<void>,
     requestTravelBoardListToDjango(context: ActionContext<TravelBoardState, any>): Promise<void>
     requestCreateTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         imageFormData: FormData): Promise<AxiosResponse>,
@@ -13,9 +13,9 @@ export type TravelBoardActions = {
 
 const actions: TravelBoardActions = {
     async requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, 
-        BoardId: number): Promise<void> {
+        boardId: number): Promise<void> {
             try {
-                const res: AxiosResponse<TravelBoard> = await axiosInst.djangoAxiosInst.get(`/travel_board/read/${BoardId}`)
+                const res: AxiosResponse<TravelBoard> = await axiosInst.djangoAxiosInst.get(`/travel_board/read/${boardId}`)
                 console.log('data :', res.data)
                 context.commit('REQUEST_TRAVEL_BOARD_TO_DJANGO', res.data)
             } catch (error) {
