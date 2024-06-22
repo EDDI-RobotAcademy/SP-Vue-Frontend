@@ -48,7 +48,7 @@ export default {
     computed: {
         ...mapState(travelBoardModule, ['travelBoard'])
     },
-    // 삭제는 다른 분이 구현함
+    // 삭제는 다른 분이 구현
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardToDjango']),
     },
