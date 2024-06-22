@@ -4,7 +4,7 @@ export interface TravelBoardState {
 }
 
 export interface TravelBoard {
-    BoardId: number
+    boardId: number
     title: string
     writer: string
     point: number
