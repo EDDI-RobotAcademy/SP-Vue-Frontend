@@ -53,10 +53,6 @@ export default {
                 params: { BoardId: item['boardId'].toString() }
             })
         },
-        getImageUrl (reviewImage) {
-            console.log('reviewImage :', reviewImage)
-            return require('@/assets/images/uploadImages/' + reviewImage)
-        },
         goToProductReadPage (BoardId) {
             this.$router.push({
                 name: 'TravelBoardReadPage',
