@@ -20,6 +20,17 @@
                             <v-textarea v-model="travelBoard.review" readonly label="내용" auto-grow/>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col cols="12">
+                            <v-img :src="getReviewImageUrl(travelBoard.reviewImage)" aspect-ratio="1" class="grey lighten-2">
+                                <template v-slot:placeholder>
+                                    <v-row class="fill-height ma-0" align="center" justify="center">
+                                        <v-progress-circular indeterminate color="grey lighten-5"/>
+                                    </v-row>
+                                </template>
+                            </v-img>
+                        </v-col>
+                    </v-row>
                     <v-row justify="end">
                         <v-col cols="auto">
                             <router-link :to="{ name: 'TravelBoardListPage' }">
@@ -51,6 +62,10 @@ export default {
     // 삭제는 다른 분이 구현
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardToDjango']),
+        getReviewImageUrl (reviewImage) {
+            console.log('reviewImage:', reviewImage)
+            return require('@/assets/images/uploadImages/' + reviewImage)
+        },
     },
     created () {
         console.log('BoardId', this.BoardId)
