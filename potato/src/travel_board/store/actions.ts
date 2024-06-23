@@ -5,20 +5,22 @@ import axiosInst from "@/utility/axiosInstance"
 // import { REQUEST_TRAVEL_BOARD_LIST_TO_DJANGO } from "./mutation-types"
 
 export type TravelBoardActions = {
-    requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, BoardId: number): Promise<void>,
+    requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, boardId: number): Promise<void>,
     requestTravelBoardListToDjango(context: ActionContext<TravelBoardState, any>): Promise<void>
     requestCreateTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         imageFormData: FormData): Promise<AxiosResponse>,
+    requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
+        boardId: number): Promise<void>
     requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
-        title: string, content: string, BoardId: number
+        title: string, review: string, BoardId: number
     }  ):Promise<void>
 }
 
 const actions: TravelBoardActions = {
     async requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, 
-        BoardId: number): Promise<void> {
+        boardId: number): Promise<void> {
             try {
-                const res: AxiosResponse<TravelBoard> = await axiosInst.djangoAxiosInst.get(`/travel_board/read/${BoardId}`)
+                const res: AxiosResponse<TravelBoard> = await axiosInst.djangoAxiosInst.get(`/travel_board/read/${boardId}`)
                 console.log('data :', res.data)
                 context.commit('REQUEST_TRAVEL_BOARD_TO_DJANGO', res.data)
             } catch (error) {
@@ -57,19 +59,30 @@ const actions: TravelBoardActions = {
                     throw error
                 }
         },
-    async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload:{
-        title: string, content: string, BoardId: number, point: number, review: string, reviewImage: string
-    }): Promise<void> {
-        const { title, content, BoardId } = payload
-
-        try {
-            await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${BoardId}`,{title, content} )
-            console.log('수정 완료')
-        } catch (error) {
-            console.log('requestModifyTravelBoardToDjango 과정에서 문제 발생')
-            throw error
-        }        
-    }
+        async requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
+            boardId: number): Promise<void> {
+                try {
+                    console.log('requestDeleteTravelToDjango()')
+                    await axiosInst.djangoAxiosInst.delete(`/travel_board/delete/${boardId}`)
+                } catch (error) {
+                    console.log('requestDeleteTravelBoardToDjango() 과정에서 문제 발생')
+                    throw error
+                }
+            },
+            async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload:{
+                title: string, BoardId: number, point: number, review: string,
+                //  reviewImage: string
+            }): Promise<void> {
+                const { title, review,point, BoardId,  } = payload
+            
+                try {
+                    await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${BoardId}`,{title, review,point} )
+                    console.log('수정 완료')
+                } catch (error) {
+                    console.log('requestModifyTravelBoardToDjango 과정에서 문제 발생')
+                    throw error
+                }        
+            }
+            
 };
 export default actions;
-
