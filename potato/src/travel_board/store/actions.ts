@@ -11,6 +11,9 @@ export type TravelBoardActions = {
         imageFormData: FormData): Promise<AxiosResponse>,
     requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         boardId: number): Promise<void>
+    requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
+        title: string, review: string, BoardId: number
+    }  ):Promise<void>
 }
 
 const actions: TravelBoardActions = {
@@ -65,6 +68,21 @@ const actions: TravelBoardActions = {
                     console.log('requestDeleteTravelBoardToDjango() 과정에서 문제 발생')
                     throw error
                 }
+            },
+            async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload:{
+                title: string, BoardId: number, point: number, review: string,
+                //  reviewImage: string
+            }): Promise<void> {
+                const { title, review,point, BoardId,  } = payload
+            
+                try {
+                    await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${BoardId}`,{title, review,point} )
+                    console.log('수정 완료')
+                } catch (error) {
+                    console.log('requestModifyTravelBoardToDjango 과정에서 문제 발생')
+                    throw error
+                }        
             }
+            
 };
 export default actions;
