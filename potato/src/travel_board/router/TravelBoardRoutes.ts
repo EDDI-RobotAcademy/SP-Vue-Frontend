@@ -25,7 +25,7 @@ const TravelRoutes = [
         }
     },
     {
-        path: '/travel_board/modify:BoardId',
+        path: '/travel_board/modify/:BoardId',
         name: 'TravelBoardModifyPage',
         components: {
             default: TravelBoardModifyPage,
