@@ -67,7 +67,7 @@ export default {
     computed: {
         ...mapState(travelBoardModule, ['travelBoard'])
     },
-    // 삭제는 다른 분이 구현
+    // 삭제 구현 by 아람
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardToDjango', 'requestDeleteTravelBoardToDjango']),
         getReviewImageUrl (reviewImage) {
