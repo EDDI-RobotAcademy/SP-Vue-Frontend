@@ -33,6 +33,11 @@
                     </v-row>
                     <v-row justify="end">
                         <v-col cols="auto">
+                            <router-link :to="{ name: 'TravelBoardModifyPage', params: { BoardId } }">
+                                <v-btn color="primary">수정</v-btn>
+                            </router-link>
+                        </v-col>
+                        <v-col cols="auto">
                             <v-btn color="error" @click="onDelete">삭제</v-btn>
                         </v-col>
                         <v-col cols="auto">
