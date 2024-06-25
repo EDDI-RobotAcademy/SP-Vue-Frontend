@@ -11,9 +11,11 @@ export type TravelBoardActions = {
         imageFormData: FormData): Promise<AxiosResponse>,
     requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         boardId: number): Promise<void>,
-    requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
-        title: string, review: string, boardId: number
-    }): Promise<void> 
+    requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>,
+        imageFormData: FormData): Promise<void> 
+    // requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
+    //     title: string, review: string, boardId: number, reviewImage: FormData
+    // }): Promise<void> 
 }
 
 const actions: TravelBoardActions = {
@@ -69,18 +71,20 @@ const actions: TravelBoardActions = {
                 throw error
             }
     },
-    
-    async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
-        title: string, review: string, boardId: number
-    }): Promise<void> {
+
+    async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>,
+        imageFormData: FormData): Promise<void>  {
         
-        const { title, review, boardId } = payload
-        console.log('modify title', title)
-        console.log('modify boardId', boardId)
+        const boardId = imageFormData.get('boardId') // 이렇게 받을 수 있음
         try {
-            // 수정을 요청 할 때는 PUT을 사용합니다.
-            await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${boardId}`, { title, review })
-            console.log('수정 성공!')
+            // 이미지 처리용
+            const res: AxiosResponse = await axiosInst.djangoAxiosInst.put(
+                `/travel_board/modify/${boardId}`, imageFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            console.log('수정 성공!', res.data)
         } catch (error) {
             console.log('requestModifyTravelBoardToDjango() 과정에서 문제 발생')
             throw error
