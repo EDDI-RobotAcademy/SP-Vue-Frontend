@@ -6,14 +6,14 @@ import axiosInst from "@/utility/axiosInstance"
 
 export type TravelBoardActions = {
     requestTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, boardId: number): Promise<void>,
-    requestTravelBoardListToDjango(context: ActionContext<TravelBoardState, any>): Promise<void>
+    requestTravelBoardListToDjango(context: ActionContext<TravelBoardState, any>): Promise<void>,
     requestCreateTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         imageFormData: FormData): Promise<AxiosResponse>,
     requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
-        boardId: number): Promise<void>
+        boardId: number): Promise<void>,
     requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
-        title: string, review: string, BoardId: number
-    }  ):Promise<void>
+        title: string, review: string, boardId: number
+    }): Promise<void> 
 }
 
 const actions: TravelBoardActions = {
@@ -58,31 +58,34 @@ const actions: TravelBoardActions = {
                     console.error('requestCreateTravelBoardToDjango():', error)
                     throw error
                 }
-        },
-        async requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
-            boardId: number): Promise<void> {
-                try {
-                    console.log('requestDeleteTravelToDjango()')
-                    await axiosInst.djangoAxiosInst.delete(`/travel_board/delete/${boardId}`)
-                } catch (error) {
-                    console.log('requestDeleteTravelBoardToDjango() 과정에서 문제 발생')
-                    throw error
-                }
-            },
-            async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload:{
-                title: string, BoardId: number, point: number, review: string,
-                //  reviewImage: string
-            }): Promise<void> {
-                const { title, review,point, BoardId,  } = payload
-            
-                try {
-                    await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${BoardId}`,{title, review,point} )
-                    console.log('수정 완료')
-                } catch (error) {
-                    console.log('requestModifyTravelBoardToDjango 과정에서 문제 발생')
-                    throw error
-                }        
+    },
+    async requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
+        boardId: number): Promise<void> {
+            try {
+                console.log('requestDeleteTravelToDjango()')
+                await axiosInst.djangoAxiosInst.delete(`/travel_board/delete/${boardId}`)
+            } catch (error) {
+                console.log('requestDeleteTravelBoardToDjango() 과정에서 문제 발생')
+                throw error
             }
+    },
+    
+    async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
+        title: string, review: string, boardId: number
+    }): Promise<void> {
+        
+        const { title, review, boardId } = payload
+        console.log('modify title', title)
+        console.log('modify boardId', boardId)
+        try {
+            // 수정을 요청 할 때는 PUT을 사용합니다.
+            await axiosInst.djangoAxiosInst.put(`/travel_board/modify/${boardId}`, { title, review })
+            console.log('수정 성공!')
+        } catch (error) {
+            console.log('requestModifyTravelBoardToDjango() 과정에서 문제 발생')
+            throw error
+        }
+    },
             
 };
 export default actions;
