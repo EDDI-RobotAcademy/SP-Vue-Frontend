@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   // 항상 도메인의 router를 추가했으면 main router 에도 추가 해줘야 함
   ...TravelRoutes,
   ...TravelBoardRoutes,
-  ...HomeRoutes
+  ...HomeRoutes,
 ]
 
 const router = createRouter({
