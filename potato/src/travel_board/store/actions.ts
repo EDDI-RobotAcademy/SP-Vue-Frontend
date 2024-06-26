@@ -12,7 +12,7 @@ export type TravelBoardActions = {
     requestDeleteTravelBoardToDjango(context: ActionContext<TravelBoardState, unknown>, 
         boardId: number): Promise<void>,
     requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>,
-        imageFormData: FormData): Promise<void> 
+        imageFormData: FormData): Promise<AxiosResponse> 
     // requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>, payload: {
     //     title: string, review: string, boardId: number, reviewImage: FormData
     // }): Promise<void> 
@@ -73,7 +73,7 @@ const actions: TravelBoardActions = {
     },
 
     async requestModifyTravelBoardToDjango(context: ActionContext<TravelBoardState, any>,
-        imageFormData: FormData): Promise<void>  {
+        imageFormData: FormData): Promise<AxiosResponse>  {
         
         const boardId = imageFormData.get('boardId') // 이렇게 받을 수 있음
         try {
@@ -85,6 +85,7 @@ const actions: TravelBoardActions = {
                 }
             })
             console.log('수정 성공!', res.data)
+            return res
         } catch (error) {
             console.log('requestModifyTravelBoardToDjango() 과정에서 문제 발생')
             throw error

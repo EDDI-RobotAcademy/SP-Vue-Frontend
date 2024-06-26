@@ -99,7 +99,7 @@ export default {
                     
                     const response = await this.requestModifyTravelBoardToDjango(imageFormData)
                     console.log('modify response :', response)
-                    //this.uploadedFileName = response.data.reviewImage
+                    this.uploadedFileName = response.data.reviewImage
                     
                     await this.$router.push({ 
                         name: 'TravelBoardReadPage',

@@ -92,7 +92,7 @@
         },
       ]);
   
-      const viewDetails = (id) => {
+      const viewDetails = (id: any) => {
         console.log(`View details for item with id: ${id}`);
         // 추가적인 로직을 여기에 구현합니다.
       };
