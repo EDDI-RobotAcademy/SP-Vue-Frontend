@@ -1,5 +1,6 @@
 export interface TravelState {
     travelList: Travel[]
+    travel: Travel | null,
 }
 
 export interface Travel {
@@ -14,6 +15,7 @@ export interface Travel {
 
 const state: TravelState = {
     travelList: [],
+    travel: null,
 }
 
 export default state
