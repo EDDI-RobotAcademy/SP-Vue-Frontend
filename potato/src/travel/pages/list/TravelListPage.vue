@@ -3,7 +3,7 @@
         <h2>안녕 난 말하는 감자야</h2>
         <v-alert travelList></v-alert>
         <v-row v-if="travelList">
-            <v-col v-for="(travel, index) in travelList" :key=index cols="12" sm="6" md="4" lg="3">
+            <v-col v-for="(travel, index) in travelList" :key=index cols="12" sm="6" md="4" lg="3" @click="goToTravelReadPage(travel.travelId)">
                         <template v-slot:placeholder>
                             <v-row class="fill-height ma-0" align="center" justify="center">
                                 <v-progress-circular indeterminate color="grey lighten-5"/>
@@ -48,6 +48,15 @@ export default {
         getImageUrl (imageName) {
             return require('@/assets/images/uploadImages/' + imageName)
         },
+        goToTravelReadPage(boardId) {
+        this.$router.push({
+            name: 'TravelReadPage',
+            params: { boardId: boardId }
+        }).catch(err => {
+            // 이미 같은 경로로의 이동을 시도할 경우 발생할 수 있는 오류를 처리합니다.
+            console.error(err);
+        });
+    }
     },
     data () {
         return {
