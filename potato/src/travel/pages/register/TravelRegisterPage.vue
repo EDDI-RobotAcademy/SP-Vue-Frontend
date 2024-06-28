@@ -56,6 +56,8 @@ export default {
             travelContent: '',
             travelImage: null,
             uploadedFileName: '',
+            travelLocation: '', 
+            travelProperty: '', 
         }
     },
     methods: {

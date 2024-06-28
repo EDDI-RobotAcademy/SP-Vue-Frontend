@@ -8,9 +8,21 @@ export type TravelActions = {
     requestTravelListToDjango(context: ActionContext<TravelState, any>): Promise<void>
     requestCreateTravelToDjango(context: ActionContext<TravelState, unknown>, 
         imageFormData: FormData): Promise<AxiosResponse>
+    requestTravelToDjango(context: ActionContext<TravelState, any>, boardId: number): Promise<void>
 }
 
 const actions: TravelActions = {
+    async requestTravelToDjango(context: ActionContext<TravelState, any>, 
+        boardId: number): Promise<void> {
+            try {
+                const res: AxiosResponse<Travel> = await axiosInst.djangoAxiosInst.get(`/travel/read/${boardId}`)
+                console.log('data :', res.data)
+                context.commit('REQUEST_TRAVEL_TO_DJANGO', res.data)
+            } catch (error) {
+                console.error('Error fetching read board :', error)
+                throw error
+            }
+    },
     async requestTravelListToDjango(context: ActionContext<TravelState, any>): Promise<void> {
         try {
             const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/travel/list/');
