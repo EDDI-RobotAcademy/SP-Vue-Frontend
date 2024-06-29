@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import TravelRoutes from '@/travel/router/TravelRoutes'
 import TravelBoardRoutes from '@/travel_board/router/TravelBoardRoutes'
 import HomeRoutes from '@/home/router/HomeRoutes'
+import AuthenticationRoutes from '@/authentication/router/AuthenticationRoutes'
 
 
 
@@ -11,6 +12,7 @@ const routes: Array<RouteRecordRaw> = [
   ...TravelRoutes,
   ...TravelBoardRoutes,
   ...HomeRoutes,
+  ...AuthenticationRoutes,
 ]
 
 const router = createRouter({
