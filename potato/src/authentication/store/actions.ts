@@ -16,7 +16,7 @@ export type AuthenticationActions = {
 
 const actions: AuthenticationActions = {
     async requestKakaoOauthRedirectionToDjango(): Promise<void> {
-        return axiosInst.djangoAxiosInst.get('kakao-oauth/kakao').then((res) => {
+        return axiosInst.djangoAxiosInst.get('kakaoOauth/kakao').then((res) => {
             console.log('requestKakaoOauthRedirectionToDjango() -> res:', res.data.url)
             window.location.href = res.data.url
         })
@@ -30,7 +30,7 @@ const actions: AuthenticationActions = {
         const { code } = payload
 
         const response = await axiosInst.djangoAxiosInst.post(
-            '/kakao-oauth/kakao/access-token', { code })
+            '/kakaoOauth/kakao/access-token', { code })
         console.log('accessToken:', response.data.accessToken.access_token)
         localStorage.setItem("accessToken", response.data.accessToken.access_token)
     } catch (error) {
@@ -45,7 +45,7 @@ const actions: AuthenticationActions = {
             console.log('accessToken:', accessToken)
             const userInfoResponse: AxiosResponse<any> = 
                 await axiosInst.djangoAxiosInst.post(
-                    '/kakao-oauth/kakao/user-info',
+                    '/kakaoOauth/kakao/user-info',
                     { access_token: accessToken })
             
             console.log('User Info:', userInfoResponse.data.user_info)
