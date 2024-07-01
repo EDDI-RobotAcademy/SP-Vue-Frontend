@@ -19,7 +19,8 @@
             v-model="pagination.page"
             :length="Math.ceil(travelBoardList.length / perPage)"
             color="primary"
-            @input="updateItems"/>
+            @input="updateItems"
+            />
     </v-container>
 </template>
 
