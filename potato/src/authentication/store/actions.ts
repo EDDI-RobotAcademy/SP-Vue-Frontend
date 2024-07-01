@@ -32,10 +32,11 @@ const actions: AuthenticationActions = {
     try {
         console.log('requestAccessTokenToDjangoRedirection()')
         const { code } = payload
-
+        
+        // 반환이 안 되었음
         const response = await axiosInst.djangoAxiosInst.post(
             '/kakaoOauth/kakao/access-token', { code })
-        console.log('accessToken:', response.data.accessToken.access_token)
+        console.log('requestAccessTokenToDjango accessToken:', response.data.accessToken.access_token)
         localStorage.setItem("accessToken", response.data.accessToken.access_token)
     } catch (error) {
         console.error('Access Token 요청 중 문제 발생:', error)
@@ -67,7 +68,7 @@ const actions: AuthenticationActions = {
     ): Promise<any> {
         try {
             const response: AxiosResponse<any> = await axiosInst.djangoAxiosInst.post(
-                '/oauth/redis-access-token', {
+                '/kakaoOauth/redis-access-token', {
                     email: email,
                     accessToken: accessToken
                 })

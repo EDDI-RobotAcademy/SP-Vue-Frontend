@@ -25,7 +25,7 @@ const actions: AccountActions = {
     ): Promise<boolean> {
 
         const response = await axiosInst.djangoAxiosInst.post(
-                '/account/email-duplication-check', { email })
+                '/travel_account/email-duplication-check', { email })
         return response.data.isDuplicate
     },
     async requestNicknameDuplicationCheckToDjango(
@@ -36,7 +36,7 @@ const actions: AccountActions = {
         const {newNickname} = payload
         
         return axiosInst.djangoAxiosInst.post(
-            '/account/nickname-duplication-check', { newNickname : newNickname })
+            '/travel_account/nickname-duplication-check', { newNickname : newNickname })
             // 결과값 res을 이용하겠다
             .then((res) => { 
                 if (res.data) {
@@ -54,7 +54,7 @@ const actions: AccountActions = {
     ): Promise<void> {
 
         try {
-            await axiosInst.djangoAxiosInst.post('/account/register', accountInfo)
+            await axiosInst.djangoAxiosInst.post('/travel_account/register', accountInfo)
         } catch (error) {
             console.error('신규 계정 생성 실패:', error)
             throw error
