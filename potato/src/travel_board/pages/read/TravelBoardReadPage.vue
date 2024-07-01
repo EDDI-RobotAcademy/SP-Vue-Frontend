@@ -16,7 +16,7 @@
                         </v-col>
                     </v-row>
                     <v-row>
-         /               <v-col cols="12">
+                       <v-col cols="12">
                             <v-textarea v-model="travelBoard.review" readonly label="내용" auto-grow/>
                         </v-col>
                     </v-row>
