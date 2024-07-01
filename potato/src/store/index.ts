@@ -1,3 +1,4 @@
+import accountModule from '@/account/store/accountModule'
 import authenticationModule from '@/authentication/store/authenticationModule'
 import travelModule from '@/travel/store/travelModule'
 import travelBoardModule from '@/travel_board/store/travelBoardModule'
@@ -17,5 +18,6 @@ export default createStore({
     travelModule,
     travelBoardModule,
     authenticationModule,
+    accountModule,
   }
 })
