@@ -14,6 +14,8 @@ export default {
             'requestUserInfoToDjango',
             'requestAddRedisAccessTokenToDjango'
         ]),
+        ...mapActions(accountModule, ['requestEmailDuplicationCheckToDjango']),
+
         async setRedirectData () {
             const code = this.$route.query.code
             console.log('code:', code)
