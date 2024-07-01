@@ -1,3 +1,7 @@
+<template>
+    <div></div>
+</template>
+
 <script>
 import { mapActions } from 'vuex'
 
@@ -8,12 +12,14 @@ export default {
         ...mapActions(authenticationModule, [
             'requestAccessTokenToDjangoRedirection',
             'requestUserInfoToDjango',
+            'requestAddRedisAccessTokenToDjango'
         ]),
         async setRedirectData () {
             const code = this.$route.query.code
             console.log('code:', code)
             await this.requestAccessTokenToDjangoRedirection({ code })
             const userInfo = await this.requestUserInfoToDjango()
+            const email = userInfo.kakao_account.email
 
         }
     },
