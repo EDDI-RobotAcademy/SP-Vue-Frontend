@@ -44,7 +44,7 @@ export default {
         ...mapState(authenticationModule, ['isAuthenticated'])
     },
     methods: {
-        
+        ...mapActions(authenticationModule, ['requestLogoutToDjango']),
         goToHome () {
             router.push('/')
         },
@@ -58,7 +58,7 @@ export default {
             router.push('/account/login')
         },
         signOut () {
-            // this.requestLogoutToDjango
+            this.requestLogoutToDjango()
             router.push('/')
         }
     },
