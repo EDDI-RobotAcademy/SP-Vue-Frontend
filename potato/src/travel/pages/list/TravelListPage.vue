@@ -1,80 +1,121 @@
-<template lang="">
-    <v-container>
-        <h2>안녕 난 말하는 감자야</h2>
-        <v-alert travelList></v-alert>
-        <v-row v-if="travelList">
-            <v-col v-for="(travel, index) in travelList" :key=index cols="12" sm="6" md="4" lg="3" @click="goToTravelReadPage(travel.travelId)">
-                        <template v-slot:placeholder>
-                            <v-row class="fill-height ma-0" align="center" justify="center">
-                                <v-progress-circular indeterminate color="grey lighten-5"/>
-                            </v-row>
-                        </template>
-                    <v-card-title>{{ travel.travelName }}</v-card-title>
-                    <v-card-subtitle>{{ travel.travelPrice }}</v-card-subtitle>
-            </v-col>
-        </v-row>
-        <v-row v-else>
-            <!-- Bootstrap 등에서 기본적으로 화면을 12개의 열로 구성함(전체 쓰겠단 소리) -->
-            <v-col cols="12" class="text-center">
-                <v-alert type="info">등록된 상품이 없습니다!</v-alert>
-            </v-col>
-        </v-row>
+<template>
+    <v-container class="my-10">
+      <h2 class="headline">여행지 리스트</h2>
+      <v-row v-if="travelList && travelList.length > 0">
+        <v-col
+          v-for="(travel, index) in travelList"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+        >
+          <v-card class="ma-5 travel-card" elevation="12" @click="goToTravelReadPage(travel.travelId)">
+            <v-img
+              :src="getImageUrl(travel.travelImage)"
+              height="200px" 
+              class="white--text"
+              gradient="to bottom, rgba(0,0,0,0), rgba(0,0,0,0.1)" 
+              style="border-top-left-radius: 10px; border-top-right-radius: 10px;"
+              cover
+            ></v-img>
+  
+            <v-card-title class="headline mb-2">{{ travel.travelName }}</v-card-title>
+  
+            <v-card-subtitle class="px-2 pb-2">{{ travel.travelPrice }}원</v-card-subtitle>
+  
+            <v-card-text class="px-4">
+              <div class="ellipsis-text">{{ shortenText(travel.travelContent, 150) }}</div>
+            </v-card-text>
+  
+            <v-card-actions class="pa-3">
+              <v-btn color="primary" text @click="goToTravelReadPage(travel.travelId)">자세히 보기</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12" class="text-center">
+          <v-alert type="info">등록된 여행 상품이 없습니다!</v-alert>
+        </v-col>
+      </v-row>
     </v-container>
-</template>
-
-<script>
-// 이것은 vuex 때문에 사용 가능
-import { mapActions, mapState } from 'vuex'
-
-const travelModule = 'travelModule'
-
-export default {
-    components: {
-        // RouterLink
-    },
+  </template>
+  
+  <script>
+  import { mapActions, mapState } from "vuex";
+  
+  export default {
     computed: {
-        ...mapState(travelModule, ['travelList']),
-        pagedItems () {
-            const startIdx = (this.pagination.page - 1) * this.perPage
-            const endIdx = startIdx + this.perPage
-            return this.travelList.slice(startIdx, endIdx)
-        }
+      ...mapState("travelModule", ["travelList"]),
     },
-    mounted () {
-        this.requestTravelListToDjango()
+    mounted() {
+      this.requestTravelListToDjango();
     },
     methods: {
-        ...mapActions(travelModule, ['requestTravelListToDjango']),
-        getImageUrl (imageName) {
-            return require('@/assets/images/uploadImages/' + imageName)
-        },
-        goToTravelReadPage(boardId) {
-        this.$router.push({
-            name: 'TravelReadPage',
-            params: { boardId: boardId }
-        }).catch(err => {
-            // 이미 같은 경로로의 이동을 시도할 경우 발생할 수 있는 오류를 처리합니다.
-            console.error(err);
+      ...mapActions("travelModule", ["requestTravelListToDjango"]),
+      getImageUrl(imageName) {
+        return require(`@/assets/images/uploadImages/${imageName}`);
+      },
+      goToTravelReadPage(travelId) {
+        this.$router.push({ name: "TravelReadPage", params: { boardId: travelId } }).catch((err) => {
+          console.error(err);
         });
-    }
-    },
-    data () {
-        return {
-            headerTitle: [
-                {
-                    title: 'No',
-                    align: 'start',
-                    sortable: true,
-                    key: 'travelId',
-                },
-                { title: '상품명', align: 'end', key: 'travelName' },
-                { title: '상품 가격', align: 'end', key: 'travelPrice' },
-            ],
-            perPage: 5,
-            pagination: {
-                page: 1,
-            }
+      },
+      shortenText(text, maxLength) {
+        if (text.length <= maxLength) {
+          return text;
+        } else {
+          return text.substr(0, maxLength - 3) + "...";
         }
-    }
-}
-</script>
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .headline {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .travel-card {
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .caption {
+    font-size: 16px;
+    color: #757575;
+  }
+  
+  .v-btn {
+    font-weight: bold;
+  }
+  
+  .v-btn:hover {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 원하는 줄 수로 수정하세요 */
+    -webkit-box-orient: vertical;
+    max-height: 60px; /* 최대 높이를 설정해주세요 */
+  }
+  
+  .v-card-title {
+    padding: 16px; /* 적절한 패딩 설정 */
+  }
+  
+  .v-card-subtitle {
+    padding: 0 16px 16px; /* 적절한 패딩 설정 */
+    font-size: 18px; /* 원하는 크기로 수정하세요 */
+  }
+  </style>
+  
