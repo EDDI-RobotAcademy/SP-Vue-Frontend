@@ -7,19 +7,16 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-                <v-text-field v-model="point" label="평점"/>
+                <div class="rating">
+                    <span v-for="star in 5" :key="star" class="star" 
+                          :class="{ 'selected': star <= point, 'hovered': star <= hoverRating }" 
+                          @click="setRating(star)"
+                          @mouseover="setHoverRating(star)"
+                          @mouseleave="resetHoverRating">&#9733;</span>
+                </div>
+                <v-text-field v-model="point" label="평점" readonly/>
             </v-col>
         </v-row>
-        <link rel="stylesheet" href="styles.css">
-        <body>
-            <div class="rating">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
-        </body>
         <v-row>
             <v-col cols="12">
                 <v-text-field v-model="writer" label="작성자"/>
@@ -64,7 +61,9 @@ export default {
             writer: '',
             reviewImage: null,
             point: 0,
+            hoverRating: 0,
             review: '',
+            uploadedFileName: '',
         }
     },
     // methods의 경우엔 실제 컴포넌트가 사용하는 기능 집합임
@@ -73,6 +72,15 @@ export default {
         // 그러므로 이것은 boardModule의 action에 정의되어야 함
         // 쉽게 얘기해서 requestCreateBoardToDjango가 boardModule의 action에 정의되어야 한다는 말
         ...mapActions(travelBoardModule, ['requestCreateTravelBoardToDjango']),
+        setRating(value) {
+            this.point = value;
+        },
+        setHoverRating(value) {
+            this.hoverRating = value;
+        },
+        resetHoverRating() {
+            this.hoverRating = 0;
+        },
         async onSubmit () {
             console.log('상품 등록 눌렀음')
             
@@ -80,7 +88,7 @@ export default {
                 if (this.reviewImage) {
                     const imageFormData = new FormData()
                     imageFormData.append('title', this.title)
-                    imageFormData.append('writer',this.writer)
+                    imageFormData.append('writer', this.writer)
                     imageFormData.append('point', this.point.toString())
                     imageFormData.append('review', this.review)
                     imageFormData.append('reviewImage', this.reviewImage)
@@ -105,26 +113,28 @@ export default {
 
 <style>
 .rating {
-    direction: rtl;
+    direction: ltr;
     font-size: 2em;
-    unicode-bidi: bidi-override;
+    display: inline-block;
 }
   
 .star {
-cursor: pointer;
-color: lightgray;
+    cursor: pointer;
+    color: lightgray;
+    display: inline-block;
+    transition: color 0.2s ease;
 }
 
-.star:hover,
-.star:hover ~ .star {
-color: gold;
+.star.selected,
+.star.hovered {
+    color: gold;
 }
 
-.star.selected {
-color: gold;
+.rating:hover .star {
+    color: lightgray;
 }
 
-.star.selected ~ .star {
-color: lightgray;
+.rating:hover .star.hovered {
+    color: gold;
 }
 </style>
