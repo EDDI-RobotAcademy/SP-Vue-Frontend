@@ -17,6 +17,16 @@
                     </v-row>
                     <v-row>
                        <v-col cols="12">
+                            <h3>평점</h3>
+                            <!-- <v-text-field readonly label="평점"/> -->
+                            <div class="rating">
+                            <span v-for="star in 5" :key="star" class="star" 
+                                    :class="{ 'selected': star <= travelBoard.point }">&#9733;</span>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                       <v-col cols="12">
                             <v-textarea v-model="travelBoard.review" readonly label="내용" auto-grow/>
                         </v-col>
                     </v-row>
@@ -86,3 +96,13 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.star {
+  font-size: 2rem;
+  cursor: default;
+}
+.selected {
+  color: gold;
+}
+</style>
