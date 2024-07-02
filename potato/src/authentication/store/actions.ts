@@ -15,7 +15,11 @@ export type AuthenticationActions = {
     requestAddRedisAccessTokenToDjango(
         context: ActionContext<AuthenticationState, any>,
         { email, accessToken }: {email:string, accessToken: string }
-    ): Promise<any>
+    ): Promise<any>,
+    requestLogoutToDjango(
+        context: ActionContext<AuthenticationState, any>,
+        userToken: string
+    ): Promise<void>
 }
 
 const actions: AuthenticationActions = {
@@ -82,7 +86,30 @@ const actions: AuthenticationActions = {
             console.error('Error adding redis access token:', error)
             throw error
         }
-    }
+    },
+    async requestLogoutToDjango(
+        context: ActionContext<AuthenticationState, any>,
+        userToken: string
+    ): Promise<void> {
+
+        try {
+            const userToken = localStorage.getItem("userToken")
+
+            const res = 
+                await axiosInst.djangoAxiosInst.post('/kakaoOauth/logout', {
+                    userToken: userToken
+                })
+            console.log('kakaoOauth logout res :', res.data)
+            console.log('kakaoOauth logout 결과 res:', res.data.isSuccess)
+            if (res.data.isSuccess === true) {
+                context.commit('REQUEST_IS_AUTHENTICATED_TO_DJANGO', false)
+            }
+        } catch (error) {
+            console.error('requestPostToFastapi() 중 에러 발생:', error)
+            throw error
+        }
+        localStorage.removeItem("userToken")
+    },
         
 };
 
