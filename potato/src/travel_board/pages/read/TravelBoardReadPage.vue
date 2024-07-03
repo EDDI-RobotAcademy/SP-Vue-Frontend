@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h2>게시물 읽기!</h2>
+        <h2>고객 리뷰</h2>
         <v-card v-if="travelBoard">
             <v-card-title>게시물 정보</v-card-title>
             <v-card-text>
