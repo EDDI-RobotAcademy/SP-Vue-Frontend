@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar :style="{ backgroundColor: 'rgba(255, 244, 104, 100)' }">
+    <v-app-bar color="FFF468">
         <v-container class ="d-flex align-center">
             <!-- <v-btn @click="goToHome" text class="white--text">
                 <v-toolbar-title class="text--darken-4">
@@ -8,19 +8,20 @@
             </v-btn> -->
             <v-btn @click="goToHome" text class="white--text">
                 <v-img
-                    src="@/assets/images/fixed/plogo.png"  
+                    src="@/assets/images/uploadImages/plogo.png"  
                     alt="Potrips Logo"    
                     height="40"             
                     width="auto"            
                     contain
                 ></v-img>
             </v-btn>
+
             <v-spacer></v-spacer>
-            <v-btn text @click="goToTravelList" class="btn-text">
+            <v-btn text @click="goToTravelList" class="white--text">
                 <v-icon left>mdi-store</v-icon>
                 <span>여행지</span>
             </v-btn>
-            <v-btn text @click="goToTravelBoardList" class="btn-text">
+            <v-btn text @click="goToTravelBoardList" class="white--text">
                 <v-icon left>mdi-forum</v-icon>
                 <span>여행후기</span>
             </v-btn>
@@ -53,7 +54,7 @@ export default {
         ...mapState(authenticationModule, ['isAuthenticated'])
     },
     methods: {
-        ...mapActions(authenticationModule, ['requestLogoutToDjango']),
+        
         goToHome () {
             router.push('/')
         },
@@ -67,7 +68,7 @@ export default {
             router.push('/account/login')
         },
         signOut () {
-            this.requestLogoutToDjango()
+            // this.requestLogoutToDjango
             router.push('/')
         }
     },

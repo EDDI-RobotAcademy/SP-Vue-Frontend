@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import TravelRoutes from '@/travel/router/TravelRoutes'
+import HomeRoutes from '@/home/router/HomeRoutes'
 
 
 const routes: Array<RouteRecordRaw> = [
   ...TravelRoutes,
+  ...HomeRoutes,
 
 ]
 
