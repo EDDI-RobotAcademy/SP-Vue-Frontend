@@ -18,7 +18,6 @@
                     <v-row>
                         <v-col cols="12">
                             <div class="rating">
-                                <!-- modify에도 별점 수정 기능을 추가해놓긴 했는데 리뷰 이미지 때문에 발생하는 에러 때문에 최종 수정 완료까진 해보지 못해서 수정 완료 후 DB에도 수정된 별점이 잘 업데이트 되는지 확인 필요함-->
                                 <span v-for="star in 5" :key="star" class="star"                                            
                                       :class="{ 'selected': star <= point, 'hovered': star <= hoverRating && star > point}" 
                                       @click="setRating(star)"

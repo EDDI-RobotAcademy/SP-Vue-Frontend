@@ -11,7 +11,7 @@
                 <v-icon left>mdi-store</v-icon>
                 <span>여행지</span>
             </v-btn>
-            <v-btn text @click="goToTravelBoardList" class="white--text">
+            <v-btn text @click="goToTravelReviewList" class="white--text">
                 <v-icon left>mdi-forum</v-icon>
                 <span>여행후기</span>
             </v-btn>
@@ -51,8 +51,8 @@ export default {
         goToTravelList () {
             router.push('/travel/list')
         },
-        goToTravelBoardList () {
-            router.push('/travel_board/list')
+        goToTravelReviewList () {
+            router.push('/travel_review/list')
         },
         signIn () {
             router.push('/account/login')
