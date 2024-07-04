@@ -17,6 +17,19 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
+                            <div class="rating">
+                                <!-- modify에도 별점 수정 기능을 추가해놓긴 했는데 리뷰 이미지 때문에 발생하는 에러 때문에 최종 수정 완료까진 해보지 못해서 수정 완료 후 DB에도 수정된 별점이 잘 업데이트 되는지 확인 필요함-->
+                                <span v-for="star in 5" :key="star" class="star"                                            
+                                      :class="{ 'selected': star <= point, 'hovered': star <= hoverRating && star > point}" 
+                                      @click="setRating(star)"
+                                      @mouseover="setHoverRating(star)"
+                                      @mouseleave="resetHoverRating">&#9733;</span>
+                            </div>
+                            <v-text-field v-model="point" readonly label="평점"/> 
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12">
                             <v-textarea v-model="review" label="내용" auto-grow/>
                         </v-col>
                     </v-row>
@@ -66,6 +79,9 @@ export default {
             writer: '',
             review: '',
             reviewImage: null, // 이거 추가해야 등록이미지가 맺힘
+            point: 0,
+            hoverRating: 0,
+            uploadedFileName: '',
         }
     },
     computed: {
@@ -73,6 +89,15 @@ export default {
     },
     methods: {
         ...mapActions(travelBoardModule, ['requestTravelBoardToDjango', 'requestModifyTravelBoardToDjango']),
+        setRating(value) {
+            this.point = value;
+        },
+        setHoverRating(value) {
+            this.hoverRating = value;
+        },
+        resetHoverRating() {
+            this.hoverRating = 0;
+        },
         async onModify () {
             console.log('수정 완료를 누르셨습니다!')
 
@@ -95,6 +120,7 @@ export default {
                     imageFormData.append('title', this.title)
                     imageFormData.append('boardId',this.BoardId)
                     imageFormData.append('review', this.review)
+                    imageFormData.append('point', this.point.toString())
                     imageFormData.append('reviewImage', this.reviewImage)
                     
                     const response = await this.requestModifyTravelBoardToDjango(imageFormData)
@@ -119,7 +145,39 @@ export default {
             this.title = this.travelBoard.title
             this.writer = this.travelBoard.writer
             this.review = this.travelBoard.review
+            this.point = this.travelBoard.point
         })
     },
 }
 </script>
+
+<style scoped>
+.rating {
+    direction: ltr;
+    font-size: 2em;
+    display: inline-block;
+}
+  
+.star {
+    cursor: pointer;
+    color: lightgray;
+    display: inline-block;
+    transition: color 0.2s ease;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.star.hovered {
+    color: gold;
+}
+
+.rating:hover .star:not(.selected) {
+    color: lightgray;
+}
+
+.rating:hover .star.hovered:not(.selected) {
+    color: gold;
+}
+</style>
