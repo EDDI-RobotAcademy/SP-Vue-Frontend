@@ -88,8 +88,9 @@
                     items: [currentSelectedItem]
                 });
 
-                //await this.$router.push({ name: 'HomeView' })
-                this.$router.push('/') // 샀던 목록으로 이동하기
+                // await this.$router.push({ name: 'HomeView' })
+                // this.$router.push('/') // 샀던 목록으로 이동하기
+                this.$router.push({ name: 'OrderReadPage', params: { orderId: orderId.toString() } });
             } catch (error) {
                 console.error("Order creation failed:", error);
             }
