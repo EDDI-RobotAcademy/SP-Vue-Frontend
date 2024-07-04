@@ -13,9 +13,6 @@
             <v-col cols="12" md="6">
               <v-text-field v-model="travel.travelPrice" readonly label="가격" outlined dense></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="travel.travelLocation" readonly label="카테고리" outlined dense></v-text-field>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
@@ -24,7 +21,7 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-textarea v-model="travel.travelContent" readonly label="여행 리뷰" auto-grow outlined dense></v-textarea>
+              <v-textarea v-model="travel.travelContent" readonly label="상세 내용" auto-grow outlined dense></v-textarea>
             </v-col>
           </v-row>
         </v-container>
@@ -57,7 +54,7 @@ const travelModule = 'travelModule'
 
 export default {
     props: {
-        boardId: {
+        travelId: {
             type: String,
             required: true,
         }
@@ -74,17 +71,17 @@ export default {
         },
         // async onDelete() {
         //     console.log('삭제를 누르셨습니다!')
-        //     await this.requestDeleteTravelBoardToDjango(this.BoardId)
+        //     await this.requestDeleteTravelBoardToDjango(this.travelId)
         //     await this.$router.push({ name: 'TravelBoardListPage' })
         // }
     },
     created () {
-        const boardId = this.$route.params.boardId; // 라우터 파라미터에서 boardId를 가져옴
-        console.log('boardId', boardId);
-        if (boardId) {
-            this.requestTravelToDjango(boardId);
+        const travelId = this.$route.params.travelId; // 라우터 파라미터에서 travelId를 가져옴
+        console.log('travelId', travelId);
+        if (travelId) {
+            this.requestTravelToDjango(travelId);
         } else {
-            console.error('boardId is undefined');
+            console.error('travelId is undefined');
             // 적절한 오류 처리 로직 추가 (예: 사용자를 이전 페이지로 리다이렉트)
         }
     },

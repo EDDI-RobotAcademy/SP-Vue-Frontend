@@ -14,7 +14,7 @@ const TravelRoutes = [
         component: TravelRegisterPage,
     },
     {
-        path: '/travel/read/:boardId',
+        path: '/travel/read/:travelId',
         name: 'TravelReadPage',
         component: TravelReadPage,
     },

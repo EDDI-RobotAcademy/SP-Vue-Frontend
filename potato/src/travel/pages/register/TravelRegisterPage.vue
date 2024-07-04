@@ -13,17 +13,12 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-                <v-text-field v-model="travelLocation" label="카테고리"/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="12">
                 <v-text-field v-model="travelProperty" label="특성"/>
             </v-col>
         </v-row>
         <v-row>
             <v-col cols="12">
-                <v-textarea v-model="travelContent" label="여행 리뷰" auto-grow/>
+                <v-textarea v-model="travelContent" label="상세 내용" auto-grow/>
             </v-col>
         </v-row>
         <v-row>
@@ -56,7 +51,6 @@ export default {
             travelContent: '',
             travelImage: null,
             uploadedFileName: '',
-            travelLocation: '', 
             travelProperty: '', 
         }
     },
@@ -69,7 +63,6 @@ export default {
                 if (this.travelImage) {
                     const imageFormData = new FormData()
                     imageFormData.append('travelName', this.travelName)
-                    imageFormData.append('travelLocation', this.travelLocation)
                     imageFormData.append('travelProperty', this.travelProperty)
                     imageFormData.append('travelPrice', this.travelPrice.toString())
                     imageFormData.append('travelContent', this.travelContent)
