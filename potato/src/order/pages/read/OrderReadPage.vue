@@ -14,9 +14,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="order in orderList" :key="order.orderId">
-                                        <td>{{ order.travelName }}</td>
-                                        <td>{{ order.travelPrice }}</td>
+                                    <tr v-for="items in order" :key="items.travel_id">
+                                        <td>{{ items.travel_name }}</td>
+                                        <td>{{ items.price }}</td>
                                     </tr>
                                 </tbody>
                             </v-table>
@@ -64,6 +64,7 @@ export default {
             try {
                 const response = await this.requestReadOrderToDjango({ orderId })
                 this.order = response
+                this.order = this.order.order_items
                 console.log('ordersItemInfo:', this.order)
             } catch (error) {
                 console.error('주문 내역 확인 중 에러:', error)
