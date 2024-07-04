@@ -24,6 +24,11 @@
               <v-textarea v-model="travel.travelContent" readonly label="상세 내용" auto-grow outlined dense></v-textarea>
             </v-col>
           </v-row>
+
+          <v-col cols="auto">
+            <v-btn color="error" @click="proceedToOrder(travel)">구매</v-btn>
+          </v-col>
+
         </v-container>
       </v-card-text>
     </v-card>
@@ -51,13 +56,19 @@
 import { mapActions, mapState } from 'vuex'
 
 const travelModule = 'travelModule'
+const orderModule = 'orderModule'
 
 export default {
     props: {
         travelId: {
             type: String,
             required: true,
-        }
+        },
+        // 구매를 위한 용도
+        // orderId: {
+        //     type: String,
+        //     required: true,
+        // }
     },
     computed: {
         ...mapState(travelModule, ['travel'])
@@ -65,15 +76,33 @@ export default {
     // 삭제 구현 by 아람
     methods: {
         ...mapActions(travelModule, ['requestTravelToDjango']),
+        ...mapActions(orderModule, ['requestCreateOrderToDjango']),
         getReviewImageUrl (travelImage) {
             console.log('travelImage:', travelImage)
             return require('@/assets/images/uploadImages/' + travelImage)
         },
-        // async onDelete() {
-        //     console.log('삭제를 누르셨습니다!')
-        //     await this.requestDeleteTravelBoardToDjango(this.travelId)
-        //     await this.$router.push({ name: 'TravelBoardListPage' })
-        // }
+        async proceedToOrder(travel) {
+            this.isCheckoutDialogVisible = false;
+
+            try {
+                const currentSelectedItem = {
+                    travelId: travel.travelId, // 현재 선택된 여행 상품 ID
+                    travelName: travel.travelName, // 현재 선택된 여행 상품 이름
+                    orderPrice: travel.travelPrice, // 현재 선택된 여행 상품 가격
+                };
+                console.log("currentSelectedItem:", currentSelectedItem);
+                
+                const userToken = localStorage.getItem('userToken');
+                const orderId = await this.requestCreateOrderToDjango({
+                    userToken,
+                    items: [currentSelectedItem]
+                });
+
+                // this.$router.push 부분을 제거함.
+            } catch (error) {
+                console.error("Order creation failed:", error);
+            }
+        }
     },
     created () {
         const travelId = this.$route.params.travelId; // 라우터 파라미터에서 travelId를 가져옴
