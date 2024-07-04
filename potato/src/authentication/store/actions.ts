@@ -3,7 +3,7 @@ import { AuthenticationState } from "./states"
 import { AxiosResponse } from "axios"
 import axiosInst from "@/utility/axiosInstance"
 import { capitalize } from "vue"
-import { Action } from "vuex/types/index.js"
+
 
 export type AuthenticationActions = {
     requestKakaoOauthRedirectionToDjango(): Promise<void>
@@ -13,7 +13,7 @@ export type AuthenticationActions = {
     requestUserInfoToDjango(
         context: ActionContext<AuthenticationState, any>): Promise<any>
     requestAddRedisAccessTokenToDjango(
-        context: ActionContext<AuthenticationState, any>,
+        { commit, state }: ActionContext<AuthenticationState, any>,
         { email, accessToken }: {email:string, accessToken: string }
     ): Promise<any>,
     requestLogoutToDjango(
@@ -70,11 +70,15 @@ const actions: AuthenticationActions = {
         { email, accessToken }: {email:string, accessToken: string }
     ): Promise<any> {
         try {
+            console.log("requestAddRedisAccessTokenToDjango -> email:", email)
+            console.log("requestAddRedisAccessTokenToDjango -> accessToken:", accessToken)
             const response: AxiosResponse<any> = await axiosInst.djangoAxiosInst.post(
                 '/kakaoOauth/redis-access-token', {
                     email: email,
                     accessToken: accessToken
                 })
+            
+            console.log('userToken:', response.data.userToken)
             
             localStorage.removeItem("accessToken")
             localStorage.setItem("userToken", response.data.userToken)

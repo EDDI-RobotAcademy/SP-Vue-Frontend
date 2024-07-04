@@ -50,8 +50,8 @@
 <script>
 import { mapActions } from 'vuex'
 
-// namespace 방식으로 vuex board 모듈을 사용하기 위한 형태
-const travelBoardModule = 'travelBoardModule'
+// namespace 방식으로 vuex review 모듈을 사용하기 위한 형태
+const travelReviewModule = 'travelReviewModule'
 
 export default {
     // 현재 이 Vue 컴포넌트에서 사용하는 변수는 모두 data에 배치됨
@@ -68,10 +68,10 @@ export default {
     },
     // methods의 경우엔 실제 컴포넌트가 사용하는 기능 집합임
     methods: {
-        // namespace 방식의 vuex board 모듈의 action 기능을 땡겨올 때 사용
-        // 그러므로 이것은 boardModule의 action에 정의되어야 함
-        // 쉽게 얘기해서 requestCreateBoardToDjango가 boardModule의 action에 정의되어야 한다는 말
-        ...mapActions(travelBoardModule, ['requestCreateTravelBoardToDjango']),
+        // namespace 방식의 vuex review 모듈의 action 기능을 땡겨올 때 사용
+        // 그러므로 이것은 reviewModule의 action에 정의되어야 함
+        // 쉽게 얘기해서 requestCreateReviewToDjango가 reviewModule의 action에 정의되어야 한다는 말
+        ...mapActions(travelReviewModule, ['requestCreateTravelReviewToDjango']),
         setRating(value) {
             this.point = value;
         },
@@ -93,9 +93,9 @@ export default {
                     imageFormData.append('review', this.review)
                     imageFormData.append('reviewImage', this.reviewImage)
                     
-                    const response = await this.requestCreateTravelBoardToDjango(imageFormData)
+                    const response = await this.requestCreateTravelReviewToDjango(imageFormData)
                     this.uploadedFileName = response.data.reviewImage
-                    this.$router.push({ name: 'TravelBoardListPage' })
+                    this.$router.push({ name: 'TravelReviewListPage' })
                 } else {
                     console.log('이미지 파일을 선택하세요!')
                 }
