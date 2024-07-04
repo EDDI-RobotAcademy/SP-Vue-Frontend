@@ -9,7 +9,7 @@
             <v-col cols="12">
                 <div class="rating">
                     <span v-for="star in 5" :key="star" class="star" 
-                          :class="{ 'selected': star <= point, 'hovered': star <= hoverRating }" 
+                          :class="{ 'selected': star <= point, 'hovered': star <= hoverRating && star > point}" 
                           @click="setRating(star)"
                           @mouseover="setHoverRating(star)"
                           @mouseleave="resetHoverRating">&#9733;</span>
@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .rating {
     direction: ltr;
     font-size: 2em;
@@ -125,16 +125,19 @@ export default {
     transition: color 0.2s ease;
 }
 
-.star.selected,
+.star.selected {
+    color: gold;
+}
+
 .star.hovered {
     color: gold;
 }
 
-.rating:hover .star {
+.rating:hover .star:not(.selected) {
     color: lightgray;
 }
 
-.rating:hover .star.hovered {
+.rating:hover .star.hovered:not(.selected) {
     color: gold;
 }
 </style>

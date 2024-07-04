@@ -17,12 +17,11 @@
                     </v-row>
                     <v-row>
                        <v-col cols="12">
-                            <h3>평점</h3>
-                            <!-- <v-text-field readonly label="평점"/> -->
-                            <div class="rating">
-                            <span v-for="star in 5" :key="star" class="star" 
-                                    :class="{ 'selected': star <= travelBoard.point }">&#9733;</span>
+                            <div class="rating-read">
+                            <span v-for="star in 5" :key="star" class="star-read" 
+                                    :class="{ 'selected-read': star <= travelBoard.point }">&#9733;</span>
                             </div>
+                            <v-text-field v-model="travelBoard.point" readonly label="평점"/>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -98,11 +97,18 @@ export default {
 </script>
 
 <style scoped>
-.star {
-  font-size: 2rem;
-  cursor: default;
+.rating-read {
+    direction: ltr;
+    font-size: 2em;
+    display: inline-block;
 }
-.selected {
-  color: gold;
+.star-read {
+    color: lightgray;
+    display: inline-block;
 }
+.star-read.selected-read {
+    color: gold;
+}
+
+
 </style>
