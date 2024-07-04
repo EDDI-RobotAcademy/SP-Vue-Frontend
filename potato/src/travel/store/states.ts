@@ -6,7 +6,6 @@ export interface TravelState {
 export interface Travel {
     travelId: number
     travelName: string
-    travelLocation: string
     travelProperty: string
     travelContent: string
     travelPrice: string

@@ -58,7 +58,7 @@
         return require(`@/assets/images/uploadImages/${imageName}`);
       },
       goToTravelReadPage(travelId) {
-        this.$router.push({ name: "TravelReadPage", params: { boardId: travelId } }).catch((err) => {
+        this.$router.push({ name: "TravelReadPage", params: { travelId: travelId } }).catch((err) => {
           console.error(err);
         });
       },
