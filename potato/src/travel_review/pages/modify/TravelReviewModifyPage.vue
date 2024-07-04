@@ -100,17 +100,7 @@ export default {
         async onModify () {
             console.log('수정 완료를 누르셨습니다!')
 
-            // 이미지 빼고는 다 수정 가능
-            // const payload = {
-            //     title: this.title,
-            //     review: this.review,
-            //     reviewId: this.ReviewId,
-            // }
-            //await this.requestModifyTravelReviewToDjango(payload)
-            // await this.$router.push({ 
-            //     name: 'TravelReviewReadPage',
-            //     params: { ReviewId: this.ReviewId } 
-            // })
+
 
             // 이미지 수정 까지 처리
             try {
@@ -132,6 +122,19 @@ export default {
                     })
                 } else {
                     console.log('이미지 파일을 선택하세요!')
+                    // 이미지 빼고는 다 수정
+                    const imageFormData = new FormData()
+                    imageFormData.append('title', this.title)
+                    imageFormData.append('reviewId',this.ReviewId)
+                    imageFormData.append('review', this.review)
+                    imageFormData.append('point', this.point.toString())
+                    imageFormData.append('reviewImage', this.reviewImage)
+                    await this.requestModifyTravelReviewToDjango(imageFormData)
+
+                    await this.$router.push({ 
+                        name: 'TravelReviewReadPage',
+                        params: { ReviewId: this.ReviewId } 
+                    })
                 }
             } catch (error) {
                 console.log('파일 처리 과정에서 에러 발생:', error)
