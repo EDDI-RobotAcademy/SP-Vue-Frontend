@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <h2>리뷰 글 수정!</h2>
-        <v-card v-if="travelBoard">
+        <v-card v-if="travelReview">
             <v-card-title>게시물 정보</v-card-title>
             <v-card-text>
                 <v-container>
@@ -12,7 +12,7 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field v-model="travelBoard.writer" readonly label="작성자"/>
+                            <v-text-field v-model="travelReview.writer" readonly label="작성자"/>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -50,7 +50,7 @@
                             <v-btn color="primary" @click="onModify">수정 완료</v-btn>
                         </v-col>
                         <v-col cols="auto">
-                            <router-link :to="{ name: 'TravelBoardReadPage' }">
+                            <router-link :to="{ name: 'TravelReviewReadPage' }">
                                 <v-btn color="secondary">돌아가기</v-btn>
                             </router-link>
                           </v-col>
@@ -64,11 +64,11 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 
-const travelBoardModule = 'travelBoardModule'
+const travelReviewModule = 'travelReviewModule'
 
 export default {
     props: {
-        BoardId: {
+        ReviewId: {
             type: String,
             required: true,
         }
@@ -85,10 +85,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(travelBoardModule, ['travelBoard'])
+        ...mapState(travelReviewModule, ['travelReview'])
     },
     methods: {
-        ...mapActions(travelBoardModule, ['requestTravelBoardToDjango', 'requestModifyTravelBoardToDjango']),
+        ...mapActions(travelReviewModule, ['requestTravelReviewToDjango', 'requestModifyTravelReviewToDjango']),
         setRating(value) {
             this.point = value;
         },
@@ -105,12 +105,12 @@ export default {
             // const payload = {
             //     title: this.title,
             //     review: this.review,
-            //     boardId: this.BoardId,
+            //     reviewId: this.ReviewId,
             // }
-            //await this.requestModifyTravelBoardToDjango(payload)
+            //await this.requestModifyTravelReviewToDjango(payload)
             // await this.$router.push({ 
-            //     name: 'TravelBoardReadPage',
-            //     params: { BoardId: this.BoardId } 
+            //     name: 'TravelReviewReadPage',
+            //     params: { ReviewId: this.ReviewId } 
             // })
 
             // 이미지 수정 까지 처리
@@ -118,18 +118,18 @@ export default {
                 if (this.reviewImage) {
                     const imageFormData = new FormData()
                     imageFormData.append('title', this.title)
-                    imageFormData.append('boardId',this.BoardId)
+                    imageFormData.append('reviewId',this.ReviewId)
                     imageFormData.append('review', this.review)
                     imageFormData.append('point', this.point.toString())
                     imageFormData.append('reviewImage', this.reviewImage)
                     
-                    const response = await this.requestModifyTravelBoardToDjango(imageFormData)
+                    const response = await this.requestModifyTravelReviewToDjango(imageFormData)
                     console.log('modify response :', response)
                     this.uploadedFileName = response.data.reviewImage
                     
                     await this.$router.push({ 
-                        name: 'TravelBoardReadPage',
-                        params: { BoardId: this.BoardId } 
+                        name: 'TravelReviewReadPage',
+                        params: { ReviewId: this.ReviewId } 
                     })
                 } else {
                     console.log('이미지 파일을 선택하세요!')
@@ -140,12 +140,12 @@ export default {
         },
     },
     created () {
-        console.log("boardId:",this.BoardId)
-        this.requestTravelBoardToDjango(this.BoardId).then(() => {
-            this.title = this.travelBoard.title
-            this.writer = this.travelBoard.writer
-            this.review = this.travelBoard.review
-            this.point = this.travelBoard.point
+        console.log("reviewId:",this.ReviewId)
+        this.requestTravelReviewToDjango(this.ReviewId).then(() => {
+            this.title = this.travelReview.title
+            this.writer = this.travelReview.writer
+            this.review = this.travelReview.review
+            this.point = this.travelReview.point
         })
     },
 }

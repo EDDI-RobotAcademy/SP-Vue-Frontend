@@ -1,8 +1,8 @@
 <template lang="">
     <v-container>
-        <h2>Travel Board 리뷰 게시판</h2>
+        <h2>Travel Review 리뷰 게시판</h2>
         <div style="text-align: left; margin: 15px;">
-            <router-link :to="{ name: 'TravelBoardRegisterPage' }">
+            <router-link :to="{ name: 'TravelReviewRegisterPage' }">
                 게시물 작성
             </router-link>
         </div>
@@ -14,10 +14,10 @@
             v-model:pagination="pagination"
             class="elevation-1"
             @click:row="readRow"
-            item-value="boardId"/>
+            item-value="reviewId"/>
         <v-pagination
             v-model="pagination.page"
-            :length="Math.ceil(travelBoardList.length / perPage)"
+            :length="Math.ceil(travelReviewList.length / perPage)"
             color="primary"
             @input="updateItems"
             />
@@ -27,37 +27,37 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 
-const travelBoardModule = 'travelBoardModule'
+const travelReviewModule = 'travelReviewModule'
 
 export default {
     components: {
         // RouterLink
     },
     computed: {
-        ...mapState(travelBoardModule, ['travelBoardList']),
+        ...mapState(travelReviewModule, ['travelReviewList']),
         pagedItems () {
             const startIdx = (this.pagination.page - 1) * this.perPage
             const endIdx = startIdx + this.perPage
-            return this.travelBoardList.slice(startIdx, endIdx)
+            return this.travelReviewList.slice(startIdx, endIdx)
         }
     },
     mounted () {
-        this.requestTravelBoardListToDjango()
+        this.requestTravelReviewListToDjango()
     },
     methods: {
-        ...mapActions(travelBoardModule, ['requestTravelBoardListToDjango']),
+        ...mapActions(travelReviewModule, ['requestTravelReviewListToDjango']),
         readRow (event, { item }) {
             console.log('item :', item)
             this.$router.push({
-                name: 'TravelBoardReadPage',
-                // BoardId는 Vue에서 사용할 변수(States), boardId는 Django에서 반환한 data field명!
-                params: { BoardId: item['boardId'].toString() }
+                name: 'TravelReviewReadPage',
+                // ReviewId는 Vue에서 사용할 변수(States), reviewId는 Django에서 반환한 data field명!
+                params: { ReviewId: item['reviewId'].toString() }
             })
         },
-        goToProductReadPage (BoardId) {
+        goToProductReadPage (ReviewId) {
             this.$router.push({
-                name: 'TravelBoardReadPage',
-                params: { BoardId: BoardId }
+                name: 'TravelReviewReadPage',
+                params: { ReviewId: ReviewId }
             })
         }
     },
@@ -68,7 +68,7 @@ export default {
                     title: 'No',
                     align: 'start',
                     sortable: true,
-                    key: 'boardId',
+                    key: 'reviewId',
                 },
                 { title: '제목', align: 'end', key: 'title' },
                 { title: '작성자', align: 'end', key: 'writer' },

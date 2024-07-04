@@ -1,37 +1,37 @@
 <template>
     <v-container>
         <h2>고객 리뷰</h2>
-        <v-card v-if="travelBoard">
+        <v-card v-if="travelReview">
             <v-card-title>게시물 정보</v-card-title>
             <v-card-text>
                 <v-container>
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field v-model="travelBoard.title" readonly label="제목"/>
+                            <v-text-field v-model="travelReview.title" readonly label="제목"/>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field v-model="travelBoard.writer" readonly label="작성자"/>
+                            <v-text-field v-model="travelReview.writer" readonly label="작성자"/>
                         </v-col>
                     </v-row>
                     <v-row>
                        <v-col cols="12">
                             <div class="rating-read">
                             <span v-for="star in 5" :key="star" class="star-read" 
-                                    :class="{ 'selected-read': star <= travelBoard.point }">&#9733;</span>
+                                    :class="{ 'selected-read': star <= travelReview.point }">&#9733;</span>
                             </div>
-                            <v-text-field v-model="travelBoard.point" readonly label="평점"/>
+                            <v-text-field v-model="travelReview.point" readonly label="평점"/>
                         </v-col>
                     </v-row>
                     <v-row>
                        <v-col cols="12">
-                            <v-textarea v-model="travelBoard.review" readonly label="내용" auto-grow/>
+                            <v-textarea v-model="travelReview.review" readonly label="리뷰 내용" auto-grow/>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-img :src="getReviewImageUrl(travelBoard.reviewImage)" aspect-ratio="1" class="grey lighten-2">
+                            <v-img :src="getReviewImageUrl(travelReview.reviewImage)" aspect-ratio="1" class="grey lighten-2">
                                 <template v-slot:placeholder>
                                     <v-row class="fill-height ma-0" align="center" justify="center">
                                         <v-progress-circular indeterminate color="grey lighten-5"/>
@@ -42,7 +42,7 @@
                     </v-row>
                     <v-row justify="end">
                         <v-col cols="auto">
-                            <router-link :to="{ name: 'TravelBoardModifyPage', params: { BoardId } }">
+                            <router-link :to="{ name: 'TravelReviewModifyPage', params: { ReviewId } }">
                                 <v-btn color="primary">수정</v-btn>
                             </router-link>
                         </v-col>
@@ -50,7 +50,7 @@
                             <v-btn color="error" @click="onDelete">삭제</v-btn>
                         </v-col>
                         <v-col cols="auto">
-                            <router-link :to="{ name: 'TravelBoardListPage' }">
+                            <router-link :to="{ name: 'TravelReviewListPage' }">
                                 <v-btn color="secondary">돌아가기</v-btn>
                             </router-link>
                         </v-col>
@@ -64,34 +64,34 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 
-const travelBoardModule = 'travelBoardModule'
+const travelReviewModule = 'travelReviewModule'
 
 export default {
     props: {
-        BoardId: {
+        ReviewId: {
             type: String,
             required: true,
         }
     },
     computed: {
-        ...mapState(travelBoardModule, ['travelBoard'])
+        ...mapState(travelReviewModule, ['travelReview'])
     },
     // 삭제 구현 by 아람
     methods: {
-        ...mapActions(travelBoardModule, ['requestTravelBoardToDjango', 'requestDeleteTravelBoardToDjango']),
+        ...mapActions(travelReviewModule, ['requestTravelReviewToDjango', 'requestDeleteTravelReviewToDjango']),
         getReviewImageUrl (reviewImage) {
             console.log('reviewImage:', reviewImage)
             return require('@/assets/images/uploadImages/' + reviewImage)
         },
         async onDelete() {
             console.log('삭제를 누르셨습니다!')
-            await this.requestDeleteTravelBoardToDjango(this.BoardId)
-            await this.$router.push({ name: 'TravelBoardListPage' })
+            await this.requestDeleteTravelReviewToDjango(this.ReviewId)
+            await this.$router.push({ name: 'TravelReviewListPage' })
         }
     },
     created () {
-        console.log('BoardId', this.BoardId)
-        this.requestTravelBoardToDjango(this.BoardId)
+        console.log('ReviewId', this.ReviewId)
+        this.requestTravelReviewToDjango(this.ReviewId)
     },
 }
 </script>
