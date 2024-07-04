@@ -4,35 +4,43 @@
     <!-- <NavigationBar /> -->
 
     <!-- Main Content -->
-    <v-main>
+    <v-main class="mt-5">
       <v-container fluid class="pa-0">
         <!-- Hero Section -->
-        <v-parallax src="https://images.unsplash.com/photo-1530538095376-a4936b35b5f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" height="calc(480px + 5vw)">
-          <v-row align="center" justify="center" class="white--text text-center">
-            <v-col cols="12">
-              <v-divider class="mx-auto" style="width: 10%"></v-divider>
-              <h1 class="text-4xl font-weight-bold">Potrips</h1>
-              <v-divider class="mx-auto" style="width: 10%"></v-divider>
-            </v-col>
-          </v-row>
-        </v-parallax>
+        <v-carousel
+          cycle
+          height="calc(350px + 4vw)"
+          interval="5000"
+          delimiter-icon="mdi-circle"
+          delimiter-active-icon="mdi-circle"
+        >
+          <v-carousel-item
+            v-for="(banner, i) in banners"
+            :key="i"
+          >
+            <v-img :src="banner" class="carousel-img"></v-img>
+          </v-carousel-item>
+        </v-carousel>
       </v-container>
+
     </v-main>
 
     <!-- About Section -->
-    <v-container class="my-10">
-      <v-row>
-        <v-col cols="12" md="5">
-          <h2 class="font-weight-bold text-lg"></h2>
-          <v-divider></v-divider>
-          <p class="mt-4 text-lg">
-            여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트
-          </p>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-container class="my-5">
+  <v-row justify="center">
+    <v-col cols="12" md="5" class="text-center">
+     
+      <h2 class="font-weight-bold text-lg potrips-title">Potrips</h2>
+
+      <v-divider class="my-5"></v-divider>
+      <p class="mt-4 text-lg font-weight-bold">
+        여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트
+      </p>
+    </v-col>
+  </v-row>
+</v-container>
         <!-- Travel Items Slide Group -->
-        <v-container class="my-10">
+        <v-container class="my-5">
       <v-slide-group show-arrows class="py-5">
         <v-slide-item v-for="(item, index) in travelList" :key="index" class="slide-item-with-margin">
           <v-card class="mx-auto fixed-width-card" elevation="5" @click="goToTravelReadPage(item.travelId)">
@@ -63,36 +71,66 @@
       </v-slide-group>
     </v-container>
 
-    <!-- Portfolio Items -->
-    <v-container class="my-10">
-      <v-row>
-        <v-col cols="12" sm="6" lg="4" v-for="(item, index) in displayedTravels" :key="index">
-          <v-hover>
-            <template v-slot:default="{ isHovering, props }">
-              <v-img
-                v-bind="props"
-                :src="getImageUrl(item.travelImage)"
-                height="200px"
-                class="transition-500"
-                :class="{'scale-110': isHovering}"
-                aspect-ratio="1"
-                alt="item.travelName"
-                @click="navigateToTravelDetail(item.travelid)"
-              ></v-img>
-            </template>
-          </v-hover>
-          <v-card class="text-center pa-6">
-            <h3 class="text-xl font-weight-bold">{{ item.travelName }}</h3>
-            <v-divider class="mx-auto my-4" style="width: 10%"></v-divider>
-            <p>{{ item.travelContent }}</p>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-btn class="mx-auto d-block my-6" color="primary" @click="toggleShowAll">
-        View All Travels
-      </v-btn>
-    </v-container>
+    <v-container class="my-4">
+    <v-row justify="center">
+      <v-col cols="12" md="5" class="text-center">
+        <h2 class="font-weight-bold text-lg potrips-title">Potrips</h2>
+        <v-divider></v-divider>
+        <p class="mt-4 text-lg font-weight-bold">
+          여행지 리스트
+        </p>
+      </v-col>
+    </v-row>
+  </v-container>
 
+    <!-- Portfolio Items -->
+    <v-container class="my-5">
+        <div class="card-grid">
+          <v-card
+            v-for="(item, index) in displayedTravels"
+            :key="index"
+            class="card-item"
+            elevation="5"
+            @click="goToTravelReadPage(item.travelId)"
+          >
+            <v-img
+              :src="getImageUrl(item.travelImage)"
+              class="white--text"
+              height="220px"
+              :alt="item.travelName"
+              cover
+            ></v-img>
+            <v-col class="d-flex align-center" cols="auto">
+              <v-icon>mdi-calendar-month-outline</v-icon>
+              <span>{{ item.duration }}</span>
+            </v-col>
+            <v-divider></v-divider>
+            <v-col class="py-0" cols="auto">
+              <v-chip
+                class="ma-1"
+                color="blue-grey lighten-4"
+                text-color="blue-grey darken-2"
+                rounded
+              >{{ item.travelContent }}</v-chip>
+              <v-chip
+                class="ma-1"
+                color="purple lighten-4"
+                text-color="purple darken-2"
+                rounded
+              ># 해시태그</v-chip>
+            </v-col>
+            <div class="text-center pa-4">
+              <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
+            </div>
+            <div class="d-flex flex-column align-center">
+              <span>{{ item.travelPrice }}원</span>
+            </div>
+          </v-card>
+        </div>
+        <v-btn class="mx-auto d-block my-6" color="primary" @click="toggleShowAll">
+          View All Travels
+        </v-btn>
+      </v-container>
 
     <!-- Footer -->
     <v-footer color="white">
@@ -180,6 +218,12 @@ export default {
       pagination: {
         page: 1,
       },
+      banners: [
+        require('@/assets/images/fixed/배너1.jpg'),
+        require('@/assets/images/fixed/배너2.jpg'),
+        require('@/assets/images/fixed/배너3.jpg'),
+        require('@/assets/images/fixed/배너4.jpg')
+      ]
     };
   },
 };
@@ -190,8 +234,8 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.v-parallax img {
-  filter: brightness(70%);
+.text-center {
+  text-align: center;
 }
 
 .v-divider {
@@ -224,7 +268,54 @@ body {
   margin: 10px; 
 }
 
-.slide-item-with-margin {
-  margin: 0 10px;
+.fixed-width-allcard {
+  width: 320px;
+  height: 455px;
+  border: 1px solid #ccc; 
+  border-radius: 20px;  
+  margin: 3px; 
 }
+
+.slide-item-with-margin {
+  margin:  10px;
+}
+.my-3 {
+  margin: 8px 0; /* 상하 마진을 8px로 설정 */
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px; /* 카드 간의 간격 */
+  
+}
+.card-item {
+  max-width: 100%;
+  border: 1px solid #ccc; 
+  border-radius: 20px;  
+}
+.v-carousel__controls {
+  background-color: transparent !important;
+}
+
+/* 필요한 경우, 덧점(delimiter) 컨트롤러의 상위 요소 배경도 투명하게 설정 */
+.v-carousel__controls__container {
+  background-color: transparent !important;
+}
+.v-carousel__controls__item {
+  background-color: transparent !important;
+  color: #555 !important; /* 덧점의 색상을 진한 회색으로 변경 */
+}
+
+.v-carousel__controls__item--active {
+  background-color: transparent !important;
+  color: #555 !important; /* 활성 덧점의 색상을 진한 회색으로 변경 */
+}
+.mt-5 {
+  margin-top: 1000px;
+}
+.potrips-title {
+  color: #e6b800; /* 감자와 비슷한 노란색 */
+  font-size: 40px;  
+}
+
 </style>
