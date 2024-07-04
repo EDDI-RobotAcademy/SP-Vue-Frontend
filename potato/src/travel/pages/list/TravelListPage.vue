@@ -29,8 +29,8 @@
             </v-card-text>
   
             <v-card-actions class="pa-3">
-              <v-btn color="primary" text @click="goToTravelReadPage(travel.travelId)">자세히 보기</v-btn>
-            </v-card-actions>
+            <button @click="proceedToOrder(travel)">주문하기</button>
+          </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -54,6 +54,7 @@
     },
     methods: {
       ...mapActions("travelModule", ["requestTravelListToDjango"]),
+      ...mapActions("orderModule", ["requestCreateOrderToDjango"]),
       getImageUrl(imageName) {
         return require(`@/assets/images/uploadImages/${imageName}`);
       },
@@ -69,6 +70,29 @@
           return text.substr(0, maxLength - 3) + "...";
         }
       },
+      async proceedToOrder(travel) {
+            this.isCheckoutDialogVisible = false;
+
+            try {
+                const currentSelectedItem = {
+                    travelId: travel.travelId, // 현재 선택된 여행 상품 ID
+                    travelName: travel.travelName, // 현재 선택된 여행 상품 이름
+                    orderPrice: travel.travelPrice, // 현재 선택된 여행 상품 가격
+                };
+                console.log("currentSelectedItem:", currentSelectedItem);
+                
+                const userToken = localStorage.getItem('userToken');
+                const orderId = await this.requestCreateOrderToDjango({
+                    userToken,
+                    items: [currentSelectedItem]
+                });
+
+                // this.$router.push 부분을 제거함.
+            } catch (error) {
+                console.error("Order creation failed:", error);
+            }
+        }
+  
     },
   };
   </script>
