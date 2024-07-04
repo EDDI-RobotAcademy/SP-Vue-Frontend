@@ -28,10 +28,11 @@
               <div class="ellipsis-text">{{ shortenText(travel.travelContent, 150) }}</div>
             </v-card-text>
   
-            <v-card-actions class="pa-3">
-            <button @click="proceedToOrder(travel)">주문하기</button>
-          </v-card-actions>
+            
           </v-card>
+          <v-card-actions class="pa-3">
+              <v-btn color="error" @click="proceedToOrder(travel)">주문하기</v-btn>
+          </v-card-actions>
         </v-col>
       </v-row>
       <v-row v-else>
@@ -87,7 +88,9 @@
                     items: [currentSelectedItem]
                 });
 
-                // this.$router.push 부분을 제거함.
+                // await this.$router.push({ name: 'HomeView' })
+                // this.$router.push('/') // 샀던 목록으로 이동하기
+                this.$router.push({ name: 'OrderReadPage', params: { orderId: orderId.toString() } });
             } catch (error) {
                 console.error("Order creation failed:", error);
             }

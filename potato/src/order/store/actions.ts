@@ -63,7 +63,7 @@ const actions: OrderActions = {
             }
 
             const response =
-                await axiosInst.djangoAxiosInst.post(`/orders/read/${orderId}`, requestData)
+                await axiosInst.djangoAxiosInst.post(`/travel_orders/read/${orderId}`, requestData)
 
             return response.data
         } catch (error) {
