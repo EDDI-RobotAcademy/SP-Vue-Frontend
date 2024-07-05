@@ -222,7 +222,8 @@ export default {
         require('@/assets/images/fixed/배너1.jpg'),
         require('@/assets/images/fixed/배너2.jpg'),
         require('@/assets/images/fixed/배너3.jpg'),
-        require('@/assets/images/fixed/배너4.jpg')
+        require('@/assets/images/fixed/배너4.jpg'),
+        require('@/assets/images/fixed/배너5.jpg'),
       ]
     };
   },
