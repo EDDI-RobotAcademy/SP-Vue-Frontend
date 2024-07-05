@@ -1,8 +1,8 @@
 <template>
     <v-container>
-        <h2>리뷰 글 수정!</h2>
+        <h2>일기 수정!</h2>
         <v-card v-if="travelReview">
-            <v-card-title>게시물 정보</v-card-title>
+            <v-card-title>일기 정보</v-card-title>
             <v-card-text>
                 <v-container>
                     <v-row>
@@ -29,7 +29,7 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-textarea v-model="review" label="내용" auto-grow/>
+                            <v-textarea v-model="review" label="일기 내용" auto-grow/>
                         </v-col>
                     </v-row>
 
