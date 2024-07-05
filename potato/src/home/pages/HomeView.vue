@@ -57,7 +57,7 @@
             </v-col>
             <v-divider></v-divider>
             <v-col class="py-0" cols="auto">
-              <v-chip class="ma-1" color="blue-grey lighten-4" text-color="blue-grey darken-2" rounded>{{ item.travelContent }} </v-chip>
+              <v-chip class="ma-1" color="blue-grey lighten-4" text-color="blue-grey darken-2" rounded>{{ item.travelProperty }} </v-chip>
               <v-chip class="ma-1" color="purple lighten-4" text-color="purple darken-2" rounded># 해시태그</v-chip>
             </v-col>
             <div class="text-center pa-4">
@@ -111,7 +111,7 @@
                 color="blue-grey lighten-4"
                 text-color="blue-grey darken-2"
                 rounded
-              >{{ item.travelContent }}</v-chip>
+              >{{ item.travelProperty }}</v-chip>
               <v-chip
                 class="ma-1"
                 color="purple lighten-4"
