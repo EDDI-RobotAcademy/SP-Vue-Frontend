@@ -3,8 +3,14 @@
     <h2 class="text-center mb-5">여행지 상세정보</h2>
     <v-card v-if="travel" class="mx-auto" max-width="800" outlined>
       <!-- 이미지 컴포넌트 -->
-      <v-img :src="getReviewImageUrl(travel.travelImage)" height="400px" class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)">
-      </v-img>
+        <v-img 
+          :src="getReviewImageUrl(travel.travelImage)" 
+          height="400px" 
+          width="100%" 
+          aspect-ratio="1.78"
+          class="white--text align-end"
+          style="object-fit: cover;">
+        </v-img>
       <!-- 여행지 이름을 이미지 아래에 위치 -->
       <v-card-title class="display-1 py-4">{{ travel.travelName }}</v-card-title>
       <v-card-text>
@@ -36,6 +42,7 @@
 </template>
 
 <style scoped>
+
 .text-center {
   text-align: center;
 }
