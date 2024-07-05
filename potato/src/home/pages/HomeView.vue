@@ -194,10 +194,10 @@ export default {
     getImageUrl(imageName) {
       return require(`@/assets/images/uploadImages/${imageName}`);
     },
-    goToTravelReadPage(boardId) {
+    goToTravelReadPage(travelId) {
       this.$router.push({
         name: "TravelReadPage",
-        params: { boardId: boardId },
+        params: { travelId: travelId },
       }).catch(err => {
         console.error(err);
       });

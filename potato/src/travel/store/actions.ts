@@ -39,7 +39,6 @@ const actions: TravelActions = {
         imageFormData: FormData): Promise<AxiosResponse> {
         try {
                 console.log('requestCreateTravelToDjango()')
-                console.log(imageFormData)
                 const res: AxiosResponse = await axiosInst.djangoAxiosInst.post(
                     '/travel/register', imageFormData, {
                     headers: {

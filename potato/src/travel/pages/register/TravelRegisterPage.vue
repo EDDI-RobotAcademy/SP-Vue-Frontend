@@ -70,7 +70,7 @@ export default {
                     console.log(imageFormData)
                     const response = await this.requestCreateTravelToDjango(imageFormData)
                     this.uploadedFileName = response.data.imageName
-                    //this.$router.push({ name: 'TravelListPage' })
+                    this.$router.push({ name: 'TravelListPage' })
                 } else {
                     console.log('이미지 파일을 선택하세요!')
                 }
