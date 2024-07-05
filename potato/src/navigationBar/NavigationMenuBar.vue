@@ -134,13 +134,13 @@ export default {
 }
 
 @font-face {
-  font-family: 'PrettyKelly'; /* 위에서 정의한 폰트 패밀리 이름 */
-  src: url('@/assets/font/pretty-kelly.ttf') format('truetype');
+  font-family: 'Krabby Patty'; /* 위에서 정의한 폰트 패밀리 이름 */
+  src: url('@/assets/font/Krabby Patty.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 .travel-button {
-  font-family: 'PrettyKelly', sans-serify; /* 위에서 정의한 폰트 패밀리 사용 */
+  font-family: 'Krabby Patty', sans-serify; /* 위에서 정의한 폰트 패밀리 사용 */
 }
 </style>
