@@ -25,7 +25,7 @@
         <v-row>
             <v-col cols="12">
                 <!-- 세로로 늘어나야 하는데 가로로 늘어나고 있음 -->
-                <v-textarea v-model="review" label="리뷰 내용" auto-grow/>
+                <v-textarea v-model="review" label="일기 내용" auto-grow/>
             </v-col>
         </v-row>
         <v-row>
