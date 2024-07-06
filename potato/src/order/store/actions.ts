@@ -22,6 +22,10 @@ export type OrderActions = {
             orderId: string
         }
     ): Promise<AxiosResponse>
+
+    requestOrderListToDjango(context: ActionContext<OrderState, any>,
+        userToken: string
+    ): Promise<void>
 }
 
 const actions: OrderActions = {
@@ -70,7 +74,23 @@ const actions: OrderActions = {
             console.error('주문 내역 요청 중 에러:', error)
             throw error
         }
-    }
+    },
+
+    async requestOrderListToDjango(context: ActionContext<OrderState, any>,
+        userToken: string
+    ): Promise<void> {
+        try {
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.post('/travel_orders/list/',{
+                userToken: userToken
+            });
+            const data: OrderItem[] = res.data;
+            console.log('order list action res data:', data)
+            context.commit('REQUEST_ORDER_LIST_TO_DJANGO', data);
+        } catch (error) {
+            console.error('Error fetching board list:', error);
+            throw error
+        }
+    },
 };
 
 export default actions;
