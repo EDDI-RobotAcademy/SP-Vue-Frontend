@@ -45,6 +45,18 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        <!-- 설문 조사 페이지 팝업 -->
+        <v-dialog v-model="showDiaglog" max-width="400px">
+            <v-card>
+                <v-card-title class="headline">알림</v-card-title>
+                <v-card-text>설문 조사 페이지로 이동하겠습니다.</v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="goToSurvey">확인</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog> 
     </v-container>
 </template>
 
@@ -132,8 +144,13 @@ export default {
                 console.log('register submitForm email:', email)
                 await this.requestAddRedisAccessTokenToDjango({ email, accessToken })
 
-                this.$router.push('/')
+                // 설문 조사 페이지 이동 팝업
+                this.showDiaglog = true 
             }
+        },
+        goToSurvey () {
+            this.showDiaglog = false
+            this.$router.push('/survey')
         }
     }
 }
