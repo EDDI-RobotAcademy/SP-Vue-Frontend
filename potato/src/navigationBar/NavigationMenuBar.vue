@@ -50,18 +50,13 @@ const orderModule = 'orderModule'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-    data () {
-        return {
-            order: null
-        };
-    },
     computed: {
         ...mapState(authenticationModule, ['isAuthenticated']),
-        ...mapState(orderModule, ['order'])
+        ...mapState(orderModule, ['orderList'])
     },
     methods: {
         ...mapActions(authenticationModule, ['requestLogoutToDjango']),
-        ...mapActions(orderModule, ['requestReadOrderToDjango']),
+        ...mapActions(orderModule, ['requestOrderListToDjango']),
         goToHome () {
             router.push('/')
         },
@@ -80,19 +75,16 @@ export default {
         },
         async goToOrderReadPage() {
             try {
-                if(!this.order || !this.order.orderId) {
+                if(!this.orderList) {
                     console.error('주문 데이터가 없습니다!')
                     return
                 }
-                
-                const orderId = this.order.orderId
+
+                const orderId = this.orderList
 
                 console.log('orderId:', orderId)
 
-                const response = await this.requestReadOrderToDjango({  orderId });
-                console.log('응답 데이터:', response)
-
-                this.$router.push(`/order/read/${orderId}`);
+                this.$router.push('/order/list');
             } catch (error) {
                 console.error('주문 페이지로 이동 중 에러:', error);
             }
@@ -107,7 +99,7 @@ export default {
             console.log('You already has a userToken!!!')
             this.$store.state.authenticationModule.isAuthenticated = true
         }
-
+        this.requestOrderListToDjango(userToken);
     },
 }
 

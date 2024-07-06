@@ -71,14 +71,10 @@ export default {
             type: String,
             required: true,
         },
-        // 구매를 위한 용도
-        // orderId: {
-        //     type: String,
-        //     required: true,
-        // }
     },
     computed: {
-        ...mapState(travelModule, ['travel'])
+        ...mapState(travelModule, ['travel']),
+        ...mapState(orderModule, ['orderList'])
     },
     // 삭제 구현 by 아람
     methods: {
@@ -105,7 +101,11 @@ export default {
                     items: [currentSelectedItem]
                 });
 
-                // this.$router.push 부분을 제거함.
+                // this.$router.push('/order/list') 
+                // router.push는 내 현재 경로에 push된 경로가 추가 되는 것임
+                // travel/read/{id}/order/list 로 이동 경로가 안 보임
+                // 그러므로 page.vue 자체로 이동하도록 설정하기
+                this.$router.push({ name: 'OrderListPage'})
             } catch (error) {
                 console.error("Order creation failed:", error);
             }
