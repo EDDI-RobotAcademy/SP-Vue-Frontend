@@ -98,8 +98,11 @@ export default {
         if (userToken) {
             console.log('You already has a userToken!!!')
             this.$store.state.authenticationModule.isAuthenticated = true
+            this.requestOrderListToDjango(userToken);
         }
-        this.requestOrderListToDjango(userToken);
+        
+
+        
     },
 }
 
