@@ -3,7 +3,7 @@
       <h2 class="headline">여행지 리스트</h2>
       <v-row v-if="travelList && travelList.length > 0">
         <v-col
-          v-for="(travel, index) in travelList"
+          v-for="(travel, index) in travelListWithIntegerPrices"
           :key="index"
           cols="12"
           sm="6"
@@ -49,6 +49,12 @@
   export default {
     computed: {
       ...mapState("travelModule", ["travelList"]),
+      travelListWithIntegerPrices() {
+      return this.travelList.map(travel => ({
+        ...travel,
+        travelPrice: Math.round(travel.travelPrice)
+      }));
+    }
     },
     mounted() {
       this.requestTravelListToDjango();
