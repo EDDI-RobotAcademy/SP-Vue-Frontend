@@ -146,11 +146,12 @@ export default {
 
                 // 설문 조사 페이지 이동 팝업
                 this.showDiaglog = true 
+                this.$router.push('/survey')
             }
         },
         goToSurvey () {
             this.showDiaglog = false
-            this.$router.push('/survey')
+            //this.$router.push('/survey')
         }
     }
 }
