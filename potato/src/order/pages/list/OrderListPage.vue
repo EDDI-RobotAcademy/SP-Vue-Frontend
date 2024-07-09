@@ -17,7 +17,7 @@
 
             <v-card-text class="px-2 pb-2">
                 <!-- slice를 통해 문자열 일부만 표기 -->
-                {{ order.created_data.slice(0,16) }}
+                {{ order.created_date.slice(0,16) }}
             </v-card-text>
                     
             </v-card>
