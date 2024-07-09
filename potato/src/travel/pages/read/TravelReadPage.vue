@@ -17,7 +17,10 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field v-model="travel.travelPrice" readonly label="가격" outlined dense></v-text-field>
+              <!-- <v-card-subtitle>가격</v-card-subtitle> -->
+              <h2>가격</h2>
+              <div class="text-h5 font-weight-bold">{{ formattedPrice }}</div>
+              <!-- <v-text-field :value="slicedPrice" readonly label="가격" outlined dense></v-text-field> -->
             </v-col>
           </v-row>
           <v-row>
@@ -70,12 +73,22 @@ export default {
         travelId: {
             type: String,
             required: true,
-        },
+        }
     },
     computed: {
         ...mapState(travelModule, ['travel']),
-        ...mapState(orderModule, ['orderList'])
-    },
+        ...mapState(orderModule, ['orderList']),
+        formattedPrice() {
+          if (this.travel && this.travel.travelPrice) {
+            const price = this.travel.travelPrice.toString();
+            // 마지막 세 자리만 표시하고 나머지는 '*'로 대체
+            return price.length > 3 
+              ? price.slice(0, -3) + '원'
+              : price + '원';
+          }
+          return '';
+        }
+    },  
     // 삭제 구현 by 아람
     methods: {
         ...mapActions(travelModule, ['requestTravelToDjango']),
@@ -110,6 +123,9 @@ export default {
                 console.error("Order creation failed:", error);
             }
         }
+    },
+    mounted () {
+      //
     },
     created () {
         const travelId = this.$route.params.travelId; // 라우터 파라미터에서 travelId를 가져옴
