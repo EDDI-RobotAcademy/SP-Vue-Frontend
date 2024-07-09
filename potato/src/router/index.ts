@@ -8,6 +8,7 @@ import AccountRoutes from '@/account/router/AccountRoutes'
 import OrderRoutes from '@/order/router/OrderRoutes'
 import SurveyRoutes from '@/survey/router/SurveyRoutes'
 import LogisticRegressionResultRoutes from '@/logisticRegression/router/LogisticRegressionRoutes'
+import RandomForestRoutes from '@/randomForest/router/RandomForestRoutes'
 
 
 
@@ -21,7 +22,8 @@ const routes: Array<RouteRecordRaw> = [
   ...AccountRoutes,
   ...OrderRoutes,
   ...SurveyRoutes,
-  ...LogisticRegressionResultRoutes
+  ...LogisticRegressionResultRoutes,
+  ...RandomForestRoutes
  
 ]
 
