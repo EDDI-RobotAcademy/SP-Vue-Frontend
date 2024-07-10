@@ -39,10 +39,46 @@
                       hueKey="travelId"/>
     </v-col>
     <v-col cols="12">
-        <common-chart :title="`Wants Preferred vs Place`"
+        <common-chart :title="`price vs Place`"
                       :data="priceInfo"
                       graphType="countplot"
                       xKey="price"
+                      hueKey="travelId"/>
+    </v-col>
+    <v-col cols="12">
+        <common-chart :title="`travelConcept vs Place`"
+                      :data="travelConceptInfo"
+                      graphType="countplot"
+                      xKey="travelConcept"
+                      hueKey="travelId"/>
+    </v-col>
+    <v-col cols="12">
+        <common-chart :title="`travelCompanion vs Place`"
+                      :data="travelCompanionInfo"
+                      graphType="countplot"
+                      xKey="travelCompanion"
+                      hueKey="travelId"/>
+    </v-col>
+    <v-col cols="12">
+        <common-chart :title="`snsFrequency vs Place`"
+                      :data="snsFrequencyInfo"
+                      graphType="countplot"
+                      xKey="snsFrequency"
+                      hueKey="travelId"/>
+    </v-col>
+
+    <v-col cols="12">
+        <common-chart :title="`photoFrequency vs Place`"
+                      :data="photoFrequencyInfo"
+                      graphType="countplot"
+                      xKey="photoFrequency"
+                      hueKey="travelId"/>
+    </v-col>
+    <v-col cols="12">
+        <common-chart :title="`travelBudgetInfo vs Place`"
+                      :data="travelBudgetInfo"
+                      graphType="countplot"
+                      xKey="travelBudget"
                       hueKey="travelId"/>
     </v-col>
 </v-row>
