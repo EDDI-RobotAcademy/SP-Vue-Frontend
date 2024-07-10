@@ -10,27 +10,7 @@
   </main>
 
 
-    <!-- Main Content -->
-    <v-main class="mt-5">
-      <v-container fluid class="pa-0">
-        <!-- Hero Section -->
-        <v-carousel
-          cycle
-          height="calc(350px + 4vw)"
-          interval="5000"
-          delimiter-icon="mdi-circle"
-          delimiter-active-icon="mdi-circle"
-        >
-          <v-carousel-item
-            v-for="(banner, i) in banners"
-            :key="i"
-          >
-            <v-img :src="banner" class="carousel-img"></v-img>
-          </v-carousel-item>
-        </v-carousel>
-      </v-container>
-
-    </v-main>
+    
 
     <!-- About Section -->
     <v-container class="my-5">
@@ -79,6 +59,28 @@
         </v-slide-item>
       </v-slide-group>
     </v-container>
+
+    <!-- Main Content -->
+    <v-main class="mt-5">
+      <v-container fluid class="pa-0">
+        <!-- Hero Section -->
+        <v-carousel
+          cycle
+          height="calc(350px + 4vw)"
+          interval="5000"
+          delimiter-icon="mdi-circle"
+          delimiter-active-icon="mdi-circle"
+        >
+          <v-carousel-item
+            v-for="(banner, i) in banners"
+            :key="i"
+          >
+            <v-img :src="banner" class="carousel-img"></v-img>
+          </v-carousel-item>
+        </v-carousel>
+      </v-container>
+
+    </v-main>
 
     <v-container class="my-4">
     <v-row justify="center">
