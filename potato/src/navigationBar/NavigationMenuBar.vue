@@ -14,8 +14,23 @@
                 ></v-img>
                 <span>POTRIPS</span>
             </v-btn>
-           
-            <v-spacer></v-spacer>
+            
+            <!-- v-spacer 전후로 왼쪽에 적힐지 오른쪽에 적힐지 구분 됨 -->
+            <v-spacer></v-spacer> 
+            <v-menu close-on-content-click>
+                <template v-slot:activator="{ props }">
+                    <v-btn color="black" class="white--text custom-button" v-bind="props">
+                        <span>Regression Analysis</span>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item v-for="(item, index) in items"
+                                :key="index" @click="item.action">
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
             <v-btn text @click="goToTravelList" class="white--text custom-button">
                 <v-icon left>mdi-train</v-icon>
                 <span>TRAVEL</span>
@@ -41,7 +56,6 @@
 </template>
   
 
-
 <script>
 import '@mdi/font/css/materialdesignicons.css'
 import router from '@/router'
@@ -50,6 +64,17 @@ const orderModule = 'orderModule'
 import { mapActions, mapState } from 'vuex'
 
 export default {
+    data () {
+        return {
+            isLogin: !!localStorage.getItem("userToken"),
+            items: [
+                { title: 'Logistic Regression', action: () => { router.push('/logistic-regression-result') } },
+                { title: 'Random Forest', action: () => { router.push('/random-forest-result') } },
+                { title: 'Polynomial Regression', action: () => { router.push('/polynomial-regression-result') } },
+                { title: 'Exponential Regression', action: () => { router.push('/exponential-regression-result') } }
+            ],
+        }
+    },
     computed: {
         ...mapState(authenticationModule, ['isAuthenticated']),
         ...mapState(orderModule, ['orderList'])
