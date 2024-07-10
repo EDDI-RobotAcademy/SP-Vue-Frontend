@@ -86,18 +86,18 @@ export default {
     newChart.append('g')
         .call(d3.axisLeft(yScale))
 
-    const colorMap = {
-        '4': 'green',
-        '5': 'orange',
-        '8': 'blue',
-        '9': 'red',
-        '11': 'purple',
-        '12': 'yellow',
-        '13': 'pink',
-        '14': 'brown',
-        '15': 'black',
-        '16': 'grey'
-    }
+        const colorMap = {
+    '4': 'lightblue', // 더 연한 톤
+    '5': 'skyblue',
+    '8': 'greenyellow',
+    '9': 'limegreen',
+    '11': 'orange',
+    '12': 'darkorange',
+    '13': 'orangered',
+    '14': 'red',
+    '15': 'darkred',
+    '16': 'maroon' // 더 진한 톤
+};
 
     console.log('colorMap:', hueKeyList.map(d => colorMap[d]))
 
