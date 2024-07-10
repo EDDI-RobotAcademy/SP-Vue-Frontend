@@ -69,8 +69,9 @@
           <v-carousel-item
             v-for="(banner, i) in banners"
             :key="i"
+            @click="handleBannerClick(i)"
           >
-            <v-img :src="banner" class="carousel-img"></v-img>
+          <v-img :src="banner" class="carousel-img"></v-img>
           </v-carousel-item>
         </v-carousel>
       </v-container>
@@ -210,6 +211,11 @@ export default {
     },
     toggleShowAll() {
       this.showAll = !this.showAll;
+    },
+    handleBannerClick(index) {
+      if (index === 3) { // 4th banner (0-based index)
+        this.$router.push('/hotel'); // Replace with your target route
+      }
     },
   },
   data() {

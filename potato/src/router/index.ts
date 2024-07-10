@@ -11,6 +11,7 @@ import LogisticRegressionResultRoutes from '@/logisticRegression/router/Logistic
 import RandomForestRoutes from '@/randomForest/router/RandomForestRoutes'
 import KmeansResultPage from '@/kmeans/pages/KmeansResultPage.vue'
 import KmeansRoutes from '@/kmeans/router/KmeansRoutes'
+import HotelRoutes from '@/hotel/router/hotelRoutes'
 
 
 
@@ -27,8 +28,7 @@ const routes: Array<RouteRecordRaw> = [
   ...LogisticRegressionResultRoutes,
   ...RandomForestRoutes,
   ...KmeansRoutes,
-  
- 
+  ...HotelRoutes,
 ]
 
 const router = createRouter({
