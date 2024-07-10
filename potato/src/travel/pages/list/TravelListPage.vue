@@ -85,6 +85,7 @@
                     travelId: travel.travelId, // 현재 선택된 여행 상품 ID
                     travelName: travel.travelName, // 현재 선택된 여행 상품 이름
                     orderPrice: travel.travelPrice, // 현재 선택된 여행 상품 가격
+                    registerDate: new Date().toISOString()
                 };
                 console.log("currentSelectedItem:", currentSelectedItem);
                 
