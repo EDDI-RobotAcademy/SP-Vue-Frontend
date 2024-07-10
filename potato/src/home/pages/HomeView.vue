@@ -31,7 +31,7 @@
         <!-- Travel Items Slide Group -->
         <v-container class="my-5">
       <v-slide-group show-arrows class="py-5">
-        <v-slide-item v-for="(item, index) in travelList" :key="index" class="slide-item-with-margin">
+        <v-slide-item v-for="(item, index) in travelListWithIntegerPrices" :key="index" class="slide-item-with-margin">
           <v-card class="mx-auto fixed-width-card" elevation="5" @click="goToTravelReadPage(item.travelId)">
             <v-img
               :src="getImageUrl(item.travelImage)"
@@ -53,7 +53,7 @@
               <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
             </div>
             <div class="d-flex flex-column align-center">
-              <span>{{ item.travelPrice }}원</span>
+              <span>{{ item.travelPrice.toLocaleString() }}원</span>
             </div>
           </v-card>
         </v-slide-item>
@@ -127,7 +127,7 @@
               <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
             </div>
             <div class="d-flex flex-column align-center">
-              <span>{{ item.travelPrice }}원</span>
+              <span>{{ Math.round(item.travelPrice).toLocaleString() }}원</span>
             </div>
           </v-card>
         </div>
@@ -182,6 +182,12 @@ export default {
   },
   computed: {
     ...mapState(travelModule, ["travelList"]),
+      travelListWithIntegerPrices() {
+    return this.travelList.map(travel => ({
+      ...travel,
+      travelPrice: Math.round(travel.travelPrice)
+    }));
+  },
     pagedItems() {
       const startIdx = (this.pagination.page - 1) * this.perPage;
       const endIdx = startIdx + this.perPage;
