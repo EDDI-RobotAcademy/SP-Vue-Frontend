@@ -5,13 +5,9 @@
     <!-- 최상단 배너 -->
     <main class="grid grid-cols-12 md:container mx-auto md:px-5">
     <section class="col-span-12 relative md:h-[calc(480px+5vw)] flex justify-center items-center">
-      <img :src="require('@/assets/images/fixed/with.jpg')" alt="Banner Image" class="banner-image">
+      <img :src="require('@/assets/images/fixed/banner.jpg')" alt="Banner Image" class="banner-image">
     </section>
   </main>
-
-
-    
-
     <!-- About Section -->
     <v-container class="my-5">
   <v-row justify="center">
@@ -21,9 +17,8 @@
 
       <v-divider class="my-5"></v-divider>
       <p class="mt-4 text-lg font-weight-bold potrips-text">
-        여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트
+        여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트<br>
         ANYWHERE YOU GO, POTATO ALWAYS WITH YOU
-               
       </p>
     </v-col>
   </v-row>
@@ -242,7 +237,7 @@ body {
 
 .potrips-text {
   font-family: 'Gaegu', cursive;
-  font-size: 1.2em
+  font-size: 1.5em
 }
 
 .text-center {
