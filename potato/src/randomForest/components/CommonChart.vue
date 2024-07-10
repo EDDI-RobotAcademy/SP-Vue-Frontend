@@ -38,81 +38,91 @@ export default {
             }
         },
         drawCountPlot () {
-            const { data, xKey, hueKey } = this
-            const svg = d3.select(this.$refs.chart)
-            
-            // 데이터를 xKey와 hueKey로 그룹화(x, y)
-            const groupData = d3.rollup(
-                data, v => v.length, d => d[xKey], d => d[hueKey]
-            )
+    const { data, xKey, hueKey } = this
+    const svg = d3.select(this.$refs.chart)
+    
+    // 데이터를 xKey와 hueKey로 그룹화(x, y)
+    const groupData = d3.rollup(
+        data, v => v.length, d => d[xKey], d => d[hueKey]
+    )
 
-            const xKeyList = Array.from(groupData.keys())
-            const hueKeyList = Array.from(groupData.get(xKeyList[0]).keys())
+    const xKeyList = Array.from(groupData.keys())
+    const hueKeyList = Array.from(new Set(data.map(d => d[hueKey])))
 
-            const maxValue = d3.max(Array.from(groupData.values()), d => d3.max(Array.from(d.values())))
+    const maxValue = d3.max(Array.from(groupData.values()), d => d3.max(Array.from(d.values())))
 
-            const parentWidth = this.$refs.chart.parentElement.clientWidth
-            const parentHeight = this.$refs.chart.parentElement.clientHeight
+    const parentWidth = this.$refs.chart.parentElement.clientWidth
+    const parentHeight = this.$refs.chart.parentElement.clientHeight
 
-            const margin = { top: 50, right: 50, bottom: 50, left: 50 }
-            const width = parentWidth - margin.left - margin.right
-            const height = parentHeight - margin.top - margin.bottom + 100
-            
-            svg.attr('width', parentWidth)
-                .attr('height', parentHeight + 100)
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 }
+    const width = parentWidth - margin.left - margin.right
+    const height = parentHeight - margin.top - margin.bottom + 200
+    
+    svg.attr('width', parentWidth)
+        .attr('height', parentHeight + 200)
 
-            const chart = svg.select('g')
+    const chart = svg.select('g')
 
-            if (!chart.empty()) {
-                chart.remove()
-            }
+    if (!chart.empty()) {
+        chart.remove()
+    }
 
-            const newChart = svg.append('g')
-                .attr('transform', `translate(${margin.left}, ${margin.top})`)
+    const newChart = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-            const xScale = d3.scaleBand()
-                .domain(xKeyList)
-                .range([0, width])
-                .padding(0, 1)
+    const xScale = d3.scaleBand()
+        .domain(xKeyList)
+        .range([0, width])
+        .padding(0.1) // 여백 추가
 
-            const yScale = d3.scaleLinear()
-                .domain([0, maxValue])
-                .range([height, 0])
+    const yScale = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([height, 0])
 
-            newChart.append('g')
-                .attr('transform', `translate(0, ${height})`)
-                .call(d3.axisBottom(xScale))
+    newChart.append('g')
+        .attr('transform', `translate(0, ${height})`)
+        .call(d3.axisBottom(xScale))
 
-            newChart.append('g')
-                .call(d3.axisLeft(yScale))
+    newChart.append('g')
+        .call(d3.axisLeft(yScale))
 
-            const colorMap = {
-                '0': 'green',
-                '1': 'orange'
-            }
+    const colorMap = {
+        '4': 'green',
+        '5': 'orange',
+        '8': 'blue',
+        '9': 'red',
+        '11': 'purple',
+        '12': 'yellow',
+        '13': 'pink',
+        '14': 'brown',
+        '15': 'black',
+        '16': 'grey'
+    }
 
-            newChart.selectAll()
-                .data(hueKeyList)
-                .enter()
-                .append('g')
-                .attr('fill', d => colorMap[d] || 'grey')
-                // .attr('fill', d => d === '1' ? 'green' : 'orange')
-                .selectAll('rect')
-                .data(d => xKeyList.map(x => ({x, y: groupData.get(x).get(d) || 0})))
-                .enter()
-                .append('rect')
-                .attr('x', d => xScale(d.x))
-                .attr('y', d => yScale(d.y))
-                .attr('width', xScale.bandwidth())
-                .attr('height', d => height - yScale(d.y))
+    console.log('colorMap:', hueKeyList.map(d => colorMap[d]))
 
-            newChart.append('text')
-                .attr('x', width / 2)
-                .attr('y', -margin.top / 2)
-                .attr('text-anchor', 'middle')
-                .style('font-size', '16px')
-                .text(this.title)
-        },
+    // 막대를 그룹으로 묶어서 색상을 적용
+    hueKeyList.forEach(hueKey => {
+        newChart.selectAll(`.bar-${hueKey}`)
+            .data(xKeyList.map(x => ({x, y: groupData.get(x).get(hueKey) || 0, hueKey})))
+            .enter()
+            .append('rect')
+            .attr('class', `bar-${hueKey}`)
+            .attr('x', d => xScale(d.x) + (xScale.bandwidth() / hueKeyList.length) * hueKeyList.indexOf(d.hueKey))
+            .attr('y', d => yScale(d.y))
+            .attr('width', xScale.bandwidth() / hueKeyList.length)
+            .attr('height', d => height - yScale(d.y))
+            .attr('fill', d => colorMap[d.hueKey])
+    })
+
+    newChart.append('text')
+        .attr('x', width / 2)
+        .attr('y', -margin.top / 2)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .text(this.title)
+},
+
         drawHistPlot () {
             const { data, xKey, bins } = this
             const svg = d3.select(this.$refs.chart)
