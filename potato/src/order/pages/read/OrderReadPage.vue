@@ -11,12 +11,20 @@
                                 <tr>
                                     <th>여행지</th>
                                     <th>가격</th>
+                                    <th>사진</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="items in order" :key="items.travel_id">
                                         <td>{{ items.travel_name }}</td>
                                         <td>{{ items.price }}</td>
+                                        <v-img :src="getReviewImageUrl(items.travel_image)" aspect-ratio="1" class="grey lighten-2">
+                                            <template v-slot:placeholder>
+                                                <v-row class="fill-height ma-0" align="center" justify="center">
+                                                <v-progress-circular indeterminate color="grey lighten-5"/>
+                                                </v-row>
+                                            </template>
+                                        </v-img>
                                     </tr>
                                 </tbody>
                             </v-table>
@@ -75,7 +83,11 @@ export default {
             alert("Order has been placed successfully!");
             // 주문 후 장바구니 초기화 또는 다른 로직 추가
             this.$router.push({ name: 'home' }); // Assuming you want to redirect to HomePage after order
-        }
+        },
+        getReviewImageUrl (travel_image) {
+            console.log('travel_image:', travel_image)
+            return require('@/assets/images/uploadImages/' + travel_image)
+        },
     },
     created() {
         this.fetchOrderData();
