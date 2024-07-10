@@ -2,6 +2,13 @@
   <v-app>
     <!-- Navigation Bar -->
     <!-- <NavigationBar /> -->
+    <!-- 최상단 배너 -->
+    <main class="grid grid-cols-12 md:container mx-auto md:px-5">
+    <section class="col-span-12 relative md:h-[calc(480px+5vw)] flex justify-center items-center">
+      <img :src="require('@/assets/images/fixed/with.jpg')" alt="Banner Image" class="banner-image">
+    </section>
+  </main>
+
 
     <!-- Main Content -->
     <v-main class="mt-5">
@@ -30,11 +37,13 @@
   <v-row justify="center">
     <v-col cols="12" md="5" class="text-center">
      
-      <h2 class="font-weight-bold text-lg potrips-title">Potrips</h2>
+      <h2 class="font-weight-bold text-lg potrips-title"></h2>
 
       <v-divider class="my-5"></v-divider>
-      <p class="mt-4 text-lg font-weight-bold">
+      <p class="mt-4 text-lg font-weight-bold potrips-text">
         여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트
+        ANYWHERE YOU GO, POTATO ALWAYS WITH YOU
+               
       </p>
     </v-col>
   </v-row>
@@ -42,7 +51,7 @@
         <!-- Travel Items Slide Group -->
         <v-container class="my-5">
       <v-slide-group show-arrows class="py-5">
-        <v-slide-item v-for="(item, index) in travelListWithIntegerPrices" :key="index" class="slide-item-with-margin">
+        <v-slide-item v-for="(item, index) in travelList" :key="index" class="slide-item-with-margin">
           <v-card class="mx-auto fixed-width-card" elevation="5" @click="goToTravelReadPage(item.travelId)">
             <v-img
               :src="getImageUrl(item.travelImage)"
@@ -57,14 +66,14 @@
             </v-col>
             <v-divider></v-divider>
             <v-col class="py-0" cols="auto">
-              <v-chip class="ma-1" color="blue-grey lighten-4" text-color="blue-grey darken-2" rounded>{{ item.travelProperty }} </v-chip>
-              <v-chip class="ma-1" color="purple lighten-4" text-color="purple darken-2" rounded># 해시태그</v-chip>
+              <v-chip class="ma-1" color="purple lighten-4" text-color="purple darken-2" rounded>{{ item.travelProperty }} </v-chip>
+              <!-- <v-chip class="ma-1" color="purple lighten-4" text-color="purple darken-2" rounded># 해시태그</v-chip>-->
             </v-col>
             <div class="text-center pa-4">
               <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
             </div>
             <div class="d-flex flex-column align-center">
-              <span>{{ item.travelPrice.toLocaleString() }}원</span>
+              <span>{{ item.travelPrice }}원</span>
             </div>
           </v-card>
         </v-slide-item>
@@ -74,11 +83,9 @@
     <v-container class="my-4">
     <v-row justify="center">
       <v-col cols="12" md="5" class="text-center">
-        <h2 class="font-weight-bold text-lg potrips-title">Potrips</h2>
+        <h2 class="font-weight-bold text-lg potrips-title">TRAVEL</h2>
         <v-divider></v-divider>
-        <p class="mt-4 text-lg font-weight-bold">
-          여행지 리스트
-        </p>
+       
       </v-col>
     </v-row>
   </v-container>
@@ -108,22 +115,17 @@
             <v-col class="py-0" cols="auto">
               <v-chip
                 class="ma-1"
-                color="blue-grey lighten-4"
-                text-color="blue-grey darken-2"
-                rounded
-              >{{ item.travelProperty }}</v-chip>
-              <v-chip
-                class="ma-1"
                 color="purple lighten-4"
                 text-color="purple darken-2"
                 rounded
-              ># 해시태그</v-chip>
+              >{{ item.travelProperty }}</v-chip>
+           
             </v-col>
             <div class="text-center pa-4">
               <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
             </div>
             <div class="d-flex flex-column align-center">
-              <span>{{ Math.round(item.travelPrice).toLocaleString() }}원</span>
+              <span>{{ item.travelPrice }}원</span>
             </div>
           </v-card>
         </div>
@@ -172,17 +174,12 @@ import { mapActions, mapState } from "vuex";
 const travelModule = "travelModule";
 
 export default {
+ 
   components: {
     // 필요한 컴포넌트를 여기에 추가
   },
   computed: {
     ...mapState(travelModule, ["travelList"]),
-      travelListWithIntegerPrices() {
-    return this.travelList.map(travel => ({
-      ...travel,
-      travelPrice: Math.round(travel.travelPrice)
-    }));
-  },
     pagedItems() {
       const startIdx = (this.pagination.page - 1) * this.perPage;
       const endIdx = startIdx + this.perPage;
@@ -239,6 +236,11 @@ export default {
 <style>
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+.potrips-text {
+  font-family: 'Gaegu', cursive;
+  font-size: 1.2em
 }
 
 .text-center {
@@ -321,8 +323,32 @@ body {
   margin-top: 1000px;
 }
 .potrips-title {
-  color: #e6b800; /* 감자와 비슷한 노란색 */
+  font-family: 'Gaegu', cursive;
+  /* color: #e6b800; 감자와 비슷한 노란색 */
   font-size: 40px;  
+  color: #1976D2;
 }
+
+.main-banner {
+  position: relative;
+  width: 100%;
+  height: 50vh; /* Viewport height */
+  overflow: hidden;
+}
+
+.main-banner img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem; /* 40px margin */
+}
+
 
 </style>
