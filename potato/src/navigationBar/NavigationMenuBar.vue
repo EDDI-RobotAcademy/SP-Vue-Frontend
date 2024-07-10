@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar :style="{ backgroundColor: 'rgb(215, 230, 209)' }" dark>
+    <v-app-bar :style="{ backgroundColor: 'rgb(255, 255, 255)' }" elevation="0">
         <v-container class ="d-flex align-center"> 
            <!-- <v-btn @click="goToHome" text class="white--text">
                 <v-toolbar-title class="white--text">
@@ -121,6 +121,10 @@ export default {
 .custom-button {
   color: rgb(4, 49, 78); /* 텍스트 색상 */
   /* background-color: rgb(100, 149, 237);  */
+  font-family: 'Gaegu', cursive;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 .custom-logo {
   width: 90px;  /* 부모 요소의 너비 */
@@ -128,14 +132,11 @@ export default {
   align-self: center; 
 }
 
-@font-face {
-  font-family: 'Krabby Patty'; /* 위에서 정의한 폰트 패밀리 이름 */
-  src: url('@/assets/font/Krabby Patty.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 
 .travel-button {
-  font-family: 'Krabby Patty', sans-serify; /* 위에서 정의한 폰트 패밀리 사용 */
+  font-family: 'Gaegu', cursive;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 </style>
