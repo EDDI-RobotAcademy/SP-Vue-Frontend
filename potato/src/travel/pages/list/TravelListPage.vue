@@ -20,13 +20,25 @@
               cover
             ></v-img>
   
-            <v-card-title class="headline mb-2">{{ travel.travelName }}</v-card-title>
+            <v-card-title class="title mb-2">{{ travel.travelName }}</v-card-title>
   
-            <v-card-subtitle class="px-2 pb-2">{{ travel.travelPrice }}원</v-card-subtitle>
+            <v-card-subtitle class="px-2 pb-2 text-center" style="color: red;">{{ travel.travelPrice.toLocaleString() }}원</v-card-subtitle>
+
   
             <v-card-text class="px-4">
-              <div class="ellipsis-text">{{ shortenText(travel.travelContent, 150) }}</div>
+              <div class="hashtags">
+                <v-chip
+                  v-for="(tag, index) in travel.travelProperty.split(',')" 
+                  :key="index"
+                  class="ma-1"
+                  color="primary"
+                  outlined
+                >
+                  {{ tag.trim() }}
+                </v-chip>
+              </div>
             </v-card-text>
+
   
             
           </v-card>
@@ -108,10 +120,17 @@
   </script>
   
   <style scoped>
-  .headline {
+  .title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  .headline {
+    font-family: 'Gaegu', cursive;
+    font-weight: bold;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .travel-card {
@@ -134,14 +153,7 @@
     color: white;
   }
   
-  .ellipsis-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* 원하는 줄 수로 수정하세요 */
-    -webkit-box-orient: vertical;
-    max-height: 60px; /* 최대 높이를 설정해주세요 */
-  }
+
   
   .v-card-title {
     padding: 16px; /* 적절한 패딩 설정 */

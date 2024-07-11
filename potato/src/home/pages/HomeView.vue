@@ -18,7 +18,7 @@
       <v-divider class="my-5"></v-divider>
       <p class="mt-4 text-lg font-weight-bold potrips-text">
         여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트<br>
-        ANYWHERE YOU GO, POTATO ALWAYS WITH YOU
+        ANYWHERE YOU GO, POTATO WILL BE WITH YOU
       </p>
     </v-col>
   </v-row>

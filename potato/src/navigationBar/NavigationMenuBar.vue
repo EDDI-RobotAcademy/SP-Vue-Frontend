@@ -70,8 +70,7 @@ export default {
             items: [
                 { title: 'Logistic Regression', action: () => { router.push('/logistic-regression-result') } },
                 { title: 'Random Forest', action: () => { router.push('/random-forest-result') } },
-                { title: 'Polynomial Regression', action: () => { router.push('/polynomial-regression-result') } },
-                { title: 'Exponential Regression', action: () => { router.push('/exponential-regression-result') } }
+                { title: 'K-means Clustering', action: () => { router.push('/kmeans-test-result') } },
             ],
         }
     },

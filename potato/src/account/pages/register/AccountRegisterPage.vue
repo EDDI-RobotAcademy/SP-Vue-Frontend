@@ -49,11 +49,11 @@
         <!-- 설문 조사 페이지 팝업 -->
         <v-dialog v-model="showDiaglog" max-width="400px">
             <v-card>
-                <v-card-title class="headline">알림</v-card-title>
-                <v-card-text>설문 조사 페이지로 이동하겠습니다.</v-card-text>
+                <v-card-title class="headline">🎉회원가입을 축하드립니다🎉</v-card-title>
+                <v-card-text>감자의 여행 취향을 공유해주세요!</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="goToSurvey">확인</v-btn>
+                    <v-btn color="primary" @click="goToSurvey">좋아요</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog> 

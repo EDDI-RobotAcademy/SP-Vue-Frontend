@@ -28,7 +28,11 @@
                 @click:row="readRow"
                 item-value="reviewId"
                 class="review-table"
-            />
+            >
+            <template v-slot:[`item.regDate`]="{ item }">
+                    {{ formatDateTime(item.regDate) }}
+                </template>
+            </v-data-table>
         </v-card>
 
         <v-pagination
@@ -61,6 +65,8 @@ export default {
     },
     mounted () {
         this.requestTravelReviewListToDjango()
+        .then(() => {
+        console.log("travelReview data list :",this.travelReviewList);})
     },
     methods: {
         ...mapActions(travelReviewModule, ['requestTravelReviewListToDjango']),
@@ -80,6 +86,12 @@ export default {
         },
         goToTravelReviewList () {
             this.$router.push('/travel_review/list')
+        },
+        formatDateTime(dateTimeString) {
+            const dateTime = new Date(dateTimeString);
+            const date = dateTime.toISOString().split('T')[0]; // yyyy-mm-dd
+            const time = dateTime.toTimeString().split(' ')[0]; // hh:mm:ss
+            return `${date} ${time}`;
         },
     },
     data () {

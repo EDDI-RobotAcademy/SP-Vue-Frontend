@@ -33,9 +33,10 @@ export default {
   methods: {
     ...mapActions("orderModule", ["requestOrderListToDjango"]),
     goToOrderReadPage(orderId) {
-      this.$router.push({ name: "OrderReadPage", params: { orderId: orderId } }).catch((err) => {
-        console.error(err);
-      });
+      this.$router.push({ name: "OrderReadPage", params: { orderId: orderId } })
+      // .catch((err) => {
+      //   console.error(err);
+      // }
     },
     sortOrderListByDate() {
       this.orderList.sort((a, b) => new String(a.created_date) - new String(b.created_date))
@@ -53,4 +54,11 @@ export default {
     margin-bottom: 0; /* 카드 간격을 없앰 */
     border-bottom: 1px solid #eee; /* 카드 간 구분선 추가 */
 }
+
+.headline {
+    font-family: 'Gaegu', cursive;
+    font-weight: bold;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
 </style>
