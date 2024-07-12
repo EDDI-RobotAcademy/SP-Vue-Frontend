@@ -25,7 +25,7 @@ export default {
     },
     async mounted () {
         try {
-            const response = await axios.get('http://localhost:33333/kmeans-test')
+            const response = await axios.get('http://192.168.0.46:33333/kmeans-test')
             console.log("response: ", response)
             this.centers = response.data.centers
             this.labels = response.data.labels
@@ -48,7 +48,7 @@ export default {
     const svg = d3.select(this.$refs.chart)
         .append('svg')
         .attr('width', '100%')
-        .attr('height', '500px')
+        .attr('height', '700px')
         .attr('viewBox', '0 0 800 500')
         .append('g')
         .attr('transform', 'translate(50,50)')
@@ -66,7 +66,7 @@ export default {
         .range([height, 0])  // SVG 요소 내의 y 좌표 범위 설정
 
     // 제한된 색상 팔레트 설정 (5개의 색상만 사용)
-    const color = d3.scaleOrdinal(d3.schemeCategory10.slice(0, 5))
+    const color = d3.scaleOrdinal(d3.schemeCategory10.slice(0, 10))
     
 
     svg.selectAll('circle')

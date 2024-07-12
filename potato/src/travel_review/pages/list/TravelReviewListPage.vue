@@ -173,12 +173,13 @@ export default {
 .wider-card {
     width: 100%;
     margin: 0 auto;
-    border: 0.1ex solid black
+    border: 0.1ex solid black;
     
 }
 
 .review-table {
     background-color: rgb(255, 255, 242)
+    
 }
 
 .v-data-table ::v-deep .v-data-table__wrapper {

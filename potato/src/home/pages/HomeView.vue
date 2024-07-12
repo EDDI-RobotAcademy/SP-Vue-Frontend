@@ -5,7 +5,7 @@
     <!-- 최상단 배너 -->
     <main class="grid grid-cols-12 md:container mx-auto md:px-5">
     <section class="col-span-12 relative md:h-[calc(480px+5vw)] flex justify-center items-center">
-      <img :src="require('@/assets/images/fixed/banner.jpg')" alt="Banner Image" class="banner-image">
+      <img :src="require('@/assets/images/fixed/banner.jpeg')" alt="Banner Image" class="banner-image">
     </section>
   </main>
     <!-- About Section -->
@@ -16,7 +16,7 @@
       <h2 class="font-weight-bold text-lg potrips-title"></h2>
 
       <v-divider class="my-5"></v-divider>
-      <p class="mt-4 text-lg font-weight-bold potrips-text">
+      <p class="mt-5 text-lg font-weight-bold potrips-text">
         여행 계획 짜는 것 마저 귀찮은 말하는 감자들을 위한 사이트<br>
         ANYWHERE YOU GO, POTATO WILL BE WITH YOU
       </p>
@@ -56,13 +56,13 @@
     </v-container>
 
     <!-- Main Content -->
-    <v-main class="mt-5">
+    <v-main class="mt-7">
       <v-container fluid class="pa-0">
         <!-- Hero Section -->
         <v-carousel
           cycle
           height="calc(350px + 4vw)"
-          interval="5000"
+          interval="3000"
           delimiter-icon="mdi-circle"
           delimiter-active-icon="mdi-circle"
         >
@@ -80,8 +80,8 @@
 
     <v-container class="my-4">
     <v-row justify="center">
-      <v-col cols="12" md="5" class="text-center">
-        <h2 class="font-weight-bold text-lg potrips-title">TRAVEL</h2>
+      <v-col cols="12" md="5" class="text-center mt-7">
+        <h2 class="font-weight-bold text-lg potrips-title">Review</h2>
         <v-divider></v-divider>
        
       </v-col>
@@ -92,43 +92,48 @@
     <v-container class="my-5">
         <div class="card-grid">
           <v-card
-            v-for="(item, index) in displayedTravels"
+            v-for="(item, index) in displayedTravelReviews"
             :key="index"
             class="card-item"
             elevation="5"
-            @click="goToTravelReadPage(item.travelId)"
+            @click="goToTravelReadPage(item.reviewId)"
           >
             <v-img
-              :src="getImageUrl(item.travelImage)"
+              :src="getImageUrl(item.reviewImage)"
               class="white--text"
               height="220px"
-              :alt="item.travelName"
+              :alt="item.review"
               cover
             ></v-img>
             <v-col class="d-flex align-center" cols="auto">
-              <v-icon>mdi-calendar-month-outline</v-icon>
-              <span>{{ item.duration }}</span>
+              <v-icon>mdi-comment-text-outline</v-icon>
+              <span class="truncate">{{ item.title }}</span>
             </v-col>
-            <v-divider></v-divider>
+            <div class="pa-1"> <!-- pa-3는 패딩을 3단위 적용합니다. -->
+  <v-divider></v-divider>
+</div>
             <v-col class="py-0" cols="auto">
               <v-chip
                 class="ma-1"
-                color="purple lighten-4"
+                font-family="Gaegu"
+                color="indigo lighten-2"
                 text-color="purple darken-2"
                 rounded
-              >{{ item.travelProperty }}</v-chip>
+              >{{ item.writer }}</v-chip>
            
             </v-col>
-            <div class="text-center pa-4">
-              <span class="text-xl font-weight-bold">{{ item.travelName }}</span>
-            </div>
-            <div class="d-flex flex-column align-center">
-              <span>{{ Math.round(item.travelPrice).toLocaleString() }}원</span>
-            </div>
+            <v-col cols="12">
+                           
+                            <div class="rating-read">
+                            <span v-for="star in 5" :key="star" class="star-read" 
+                                    :class="{ 'selected-read': star <= item.point }">&#9733;</span>
+                            </div>
+                            <!-- <v-text-field v-model="travelReview.point" readonly label="평점"/> -->
+                        </v-col>
           </v-card>
         </div>
         <v-btn class="mx-auto d-block my-6" color="primary" @click="toggleShowAll">
-          View All Travels
+          View All Reviews
         </v-btn>
       </v-container>
 
@@ -170,6 +175,7 @@
 import { mapActions, mapState } from "vuex";
 
 const travelModule = "travelModule";
+const travelReviewModule = "travelReviewModule";
 
 export default {
  
@@ -178,6 +184,7 @@ export default {
   },
   computed: {
     ...mapState(travelModule, ["travelList"]),
+    ...mapState(travelReviewModule, ["travelReviewList"]),
       travelListWithIntegerPrices() {
     return this.travelList.map(travel => ({
       ...travel,
@@ -189,22 +196,24 @@ export default {
       const endIdx = startIdx + this.perPage;
       return this.travelList.slice(startIdx, endIdx);
     },
-    displayedTravels() {
-      return this.showAll ? this.travelList : this.travelList.slice(0, 3);
+    displayedTravelReviews() {
+      return this.showAll ? this.travelReviewList : this.travelReviewList.slice(0, 5);
     },
   },
   mounted() {
     this.requestTravelListToDjango();
+    this.requestTravelReviewListToDjango();
   },
   methods: {
     ...mapActions(travelModule, ["requestTravelListToDjango"]),
+    ...mapActions(travelReviewModule, ["requestTravelReviewListToDjango"]),
     getImageUrl(imageName) {
       return require(`@/assets/images/uploadImages/${imageName}`);
     },
-    goToTravelReadPage(travelId) {
+    goToTravelReadPage(ReviewId) {
       this.$router.push({
-        name: "TravelReadPage",
-        params: { travelId: travelId },
+        name: "TravelReviewReadPage",
+        params: { ReviewId: ReviewId },
       }).catch(err => {
         console.error(err);
       });
@@ -357,6 +366,21 @@ body {
 
 .mb-10 {
   margin-bottom: 2.5rem; /* 40px margin */
+}
+.star-read {
+    color: lightgray;
+    display: inline-block;
+}
+.star-read.selected-read {
+    color: gold;
+}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: large;
+  
+
 }
 
 
