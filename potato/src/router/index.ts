@@ -9,7 +9,6 @@ import OrderRoutes from '@/order/router/OrderRoutes'
 import SurveyRoutes from '@/survey/router/SurveyRoutes'
 import LogisticRegressionResultRoutes from '@/logisticRegression/router/LogisticRegressionRoutes'
 import RandomForestRoutes from '@/randomForest/router/RandomForestRoutes'
-import KmeansResultPage from '@/kmeans/pages/KmeansResultPage.vue'
 import KmeansRoutes from '@/kmeans/router/KmeansRoutes'
 import HotelRoutes from '@/hotel/router/hotelRoutes'
 
