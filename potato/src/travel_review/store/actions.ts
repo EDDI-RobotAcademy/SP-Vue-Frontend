@@ -34,7 +34,7 @@ const actions: TravelReviewActions = {
         try {
             const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/travel_review/list/');
             const data: TravelReview[] = res.data;
-            console.log('data:', data)
+            console.log('travelreview action res:', data)
             context.commit('REQUEST_TRAVEL_REVIEW_LIST_TO_DJANGO', data);
         } catch (error) {
             console.error('Error fetching review list:', error);

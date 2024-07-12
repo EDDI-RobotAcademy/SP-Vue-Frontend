@@ -75,11 +75,11 @@ export default {
                         .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
 
             const x = d3.scaleLinear()
-                        .domain(d3.extent(this.X, d => d[1]))
+                        .domain(d3.extent(this.X, d => d[0]))
                         .range([0, this.svgWidth - this.margin.left - this.margin.right])
 
             const y = d3.scaleLinear()
-                        .domain(d3.extent(this.X, d => d[2]))
+                        .domain(d3.extent(this.X, d => d[1]))
                         .range([this.svgHeight - this.margin.top - this.margin.bottom, 0])
 
             g.append('g')
@@ -93,8 +93,8 @@ export default {
                 .data(this.X)
                 .enter()
                 .append('circle')
-                .attr('cx', d => x(d[1]))
-                .attr('cy', d => y(d[2]))
+                .attr('cx', d => x(d[0]))
+                .attr('cy', d => y(d[1]))
                 .attr('r', 5)
                 .style('fill', (d, i) => this.colorScale(this.y[i])) // 각 travelId에 다른 색상 적용
             
